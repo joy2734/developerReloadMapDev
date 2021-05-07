@@ -4,7 +4,7 @@ import App from './App'
 import { setConfig  } from 'react-hot-loader';
 
 setConfig({/* 동작하지않고잇음 */
-    reloadHooks: false,
+    reloadHooks: true,
 });
 
 ReactDOM.render(<App/>, document.getElementById('app')) 
