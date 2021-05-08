@@ -9,16 +9,16 @@ const useStyles = makeStyles((theme) => ({
     container: {
         borderTop: '1px solid #eaeaea',
         padding: '65px 300px',
-        height: '180px'
+        height: '180px',
+        display: 'flex',
+        justifyContent: 'space-between'
     },
     writerInfo:{
-        float: 'left',
-        width:'307px',
+        width:'307px'
     },
     siteInfo:{
         display: 'flex',
-        flexDirection: 'row',
-        float: 'right'
+        flexDirection: 'row'
     },
     developIconBtn:{
       padding: '5px'  

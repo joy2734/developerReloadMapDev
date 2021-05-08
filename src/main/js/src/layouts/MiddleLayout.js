@@ -21,12 +21,13 @@ const useStyles = makeStyles((theme) => ({
     },
     detailInfo:{
         borderTop: '1px solid #eaeaea',
-        backgroundColor: '#fafafa',
+        backgroundColor: '#eae7e7',
         display: 'flex',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     detailInfoWrap:{
-        marginLeft: '16%',
         maxWidth: '1300px'
     }
 }));
