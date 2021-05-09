@@ -6,8 +6,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import {useDispatch} from 'react-redux';
+import {titleChangeAction} from '../store/actions/RoadMapAction';
 import {
-  useHistory 
+  useHistory
 } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +43,7 @@ const TopLayout = ({
     const classes = useStyles();
     const [menus, setMenus] = useState([]);
     const history = useHistory();
+    var dispatch = useDispatch();
   
     useEffect(()=>{
       fetch('../../public/data/menuList.json')
@@ -48,8 +51,15 @@ const TopLayout = ({
       .then(resp => setMenus(resp.menuList))
     }, []);
   
+    const clickMenu = (menuLink) =>{
+      if (history.location.pathname.split("/").length > 1)
+        history.replace("");
+      history.push(menuLink)
+      dispatch(titleChangeAction(menuLink))
+    }
+
     const menuList = menus.map( menu =>{
-      return <li key={menu.id} className={classes.title} onClick={()=> history.push(menu.menu_link)}><Typography>{menu.menu_name}</Typography></li>
+      return <li key={menu.id} className={classes.title} onClick={()=> clickMenu(menu.menu_link)}><Typography>{menu.menu_name}</Typography></li>
     })
     return (
         <div className={classes.topArea}>
@@ -61,7 +71,7 @@ const TopLayout = ({
                 <div className={classes.menuArea}>
                 <nav>
                     <ul className={classes.menuList}>
-                        {menuList}
+                      {menuList}
                     </ul>
                 </nav>
                 </div>

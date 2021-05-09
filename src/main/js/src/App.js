@@ -3,45 +3,66 @@ import clsx from 'clsx';
 import {
   HashRouter as Router,
   Switch,
-  Route,
-  useHistory 
+  Route 
 } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-;
-import Typography from '@material-ui/core/Typography';
-import {BottomLayout, MiddleLayout, TopLayout} from './layouts';
+import {
+  BottomLayout,
+  MiddleLayout, 
+  TopLayout,
+  FrontEndLayout,
+  BackEndLayout,
+  DevOpLayout,
+  ReactLayout,
+  AndroidLayout,
+  CommunityLayout} from './layouts';
+import {useSelector} from 'react-redux';
 import { hot } from 'react-hot-loader/root';
 
 const useStyles = makeStyles((theme) => ({
-
+  container: {
+    paddingLeft: '20px',
+    paddingRight: '20px'
+  },
+  title:{
+      color: '#212529',
+      fontSize: '24px',
+      fontWeight: '700',
+      marginBottom: '12px',
+      padding: '45px 30px',
+      textAlign: 'center'
+  },
+  subtitle:{
+      fontSize: '16px',
+      color: 'rgb(68, 68, 68)'
+  }
 }));
 
 function App() {
   const classes = useStyles();
-  const [menus, setMenus] = useState([]);
-  let history = useHistory();
+  const {
+    title,
+    subTitle
+  }= useSelector(store => store.titleChangeReducer);
 
-  useEffect(()=>{
-    fetch('../public/data/menuList.json')
-    .then(resp => { return resp.json() })
-    .then(resp => setMenus(resp.menuList))
-  }, []);
-  
   return (
-    <Router basename="/roadMap">
-      <TopLayout />
+    <Router>
+      <TopLayout title={title} subTitle={subTitle} />
+      <div className={classes.container}>
+          <div className={classes.title}>
+              <h1>{title}</h1>
+              <p className={classes.subtitle}>{subTitle}</p>
+          </div>
+      </div>
       <Switch>
-        <Route path="/home" component={MiddleLayout} />
-        <Route path="/front">
-          <div>121212121</div>
-        </Route>
-        <Route path="/back">
-          <div>sdsdsd</div>
-        </Route>
-        <Route path="/DevOps"></Route>
-        <Route path="/react"></Route>
-        <Route path="/android"></Route>
-        <Route path="/board"></Route>
+        <Route path="/home" component={MiddleLayout} ></Route>
+        <Route path="/front" component={FrontEndLayout} ></Route>
+        <Route path="/back" component={BackEndLayout} ></Route>
+        <Route path="/DevOps" component={DevOpLayout} ></Route>
+        <Route path="/react" component={ReactLayout} ></Route>
+        <Route path="/android" component={AndroidLayout}></Route>
+        <Route path="/community" component={CommunityLayout} ></Route>
+        <Route exact={true} path="/" component={MiddleLayout} ></Route>
       </Switch>
       <BottomLayout />
     </Router>

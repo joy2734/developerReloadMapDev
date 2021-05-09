@@ -8,7 +8,7 @@ import { IconButton } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     container: {
         borderTop: '1px solid #eaeaea',
-        padding: '65px 300px',
+        padding: '50px 300px',
         height: '180px',
         display: 'flex',
         justifyContent: 'space-between'
