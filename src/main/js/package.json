@@ -20,6 +20,7 @@
   "homepage": "https://github.com/joy2734/react-meterial-web#readme",
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.1",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.0.0",
@@ -36,6 +37,7 @@
     "html-webpack-plugin": "^4.4.0",
     "json-server": "^0.16.3",
     "node-sass": "^5.0.0",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",
