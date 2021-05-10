@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hdcd.community.mapper.CommunityMapper" >
+
+	<insert id="create">
+		INSERT INTO COMMUNITY_INFO
+		(
+			title, 
+			content, 
+			contype, 
+			writer, 
+			regDate, 
+			modifyDate
+		)
+		VALUES
+		(
+			#{title},
+			#{content},
+			#{contype},
+			#{writer},
+			CURDATE(),
+			CURDATE()
+		)
+	</insert>
+
+	<select id="read" resultType="org.hdcd.community.model.Community">
+		SELECT commuNum as comNum,
+			title,
+			content,
+			contype,
+			regDate,
+			modifyDate,
+			writer
+		FROM COMMUNITY_INFO
+		WHERE commuNum=#{commuNum}
+	</select>
+
+
+	<update id="update">
+		UPDATE COMMUNITY_INFO
+		SET title=#{title},
+			content=#{content},
+			contype=#{conType},
+			modifyDate=CURDATE()
+		WHERE commuNum=#{commuNum}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM board
+		WHERE commuNum=#{commuNum}
+	</delete>
+	
+	<select id="list" resultType="org.hdcd.community.model.Community">
+		SELECT commuNum as comNum,
+			title,
+			content,
+			contype,
+			regDate,
+			modifyDate,
+			writer
+		FROM COMMUNITY_INFO
+		<if test="title != '' ">
+			WHERE title=#{title}
+		</if>
+	</select>
+
+</mapper>
