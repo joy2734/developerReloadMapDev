@@ -38,4 +38,5 @@ out/
 
 ## ui
 src/main/js/public/
+src/main/resources/static/
 application.yml

@@ -8,7 +8,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import testJson from '../../public/data/comList.json'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -31,23 +30,31 @@ const CommunityLayout = ({
 
 }) =>{
     const classes = useStyles();
-    const [comment, setComment] = useState(testJson);
+    const [comment, setComment] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
 
     const commentsPerPage = 10
     const pageVisited = pageNumber * commentsPerPage; //???
     const pageTotalNum = comment.length;
     
+    useEffect(()=>{
+        fetch('http://localhost:8080/list')
+        .then(resp => { return resp.json() })
+        .then(resp => setComment(resp))
+      }, []);
+
     const commentsPage = comment.slice(pageVisited, pageVisited + commentsPerPage)
     .map((comment)=>{
         return (
-            <TableRow key={comment.id}>
+            <TableRow key={comment.commuNum}>
                 <TableCell component="th" scope="row">
-                    {comment.name}
+                    {comment.title}
                 </TableCell>
-                <TableCell align="right">{comment.surname}</TableCell>
-                <TableCell align="right">{comment.birthYear}</TableCell>
-                <TableCell align="right">{comment.birthCity}</TableCell>
+                <TableCell align="right">{comment.content}</TableCell>
+                <TableCell align="right">{comment.contype}</TableCell>
+                <TableCell align="right">{comment.writer}</TableCell>
+                <TableCell align="right">{comment.regDate}</TableCell>
+                <TableCell align="right">{comment.modifyDate}</TableCell>
             </TableRow>
         )
     });
@@ -64,10 +71,12 @@ const CommunityLayout = ({
                 <Table className={classes.grid} size="small" aria-label="a dense table">
                     <TableHead>
                     <TableRow>
-                        <TableCell>이름</TableCell>
+                        <TableCell>제목</TableCell>
                         <TableCell align="right">내용</TableCell>
-                        <TableCell align="right">출생년도</TableCell>
-                        <TableCell align="right">출생도시</TableCell>
+                        <TableCell align="right">타입</TableCell>
+                        <TableCell align="right">작성자</TableCell>
+                        <TableCell align="right">등록일</TableCell>
+                        <TableCell align="right">수정일</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>

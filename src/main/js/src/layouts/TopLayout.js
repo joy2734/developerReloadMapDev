@@ -46,9 +46,9 @@ const TopLayout = ({
     var dispatch = useDispatch();
   
     useEffect(()=>{
-      fetch('../../public/data/menuList.json')
+      fetch('http://localhost:8080/menu')
       .then(resp => { return resp.json() })
-      .then(resp => setMenus(resp.menuList))
+      .then(resp => setMenus(resp))
     }, []);
   
     const clickMenu = (menuLink) =>{
@@ -59,7 +59,7 @@ const TopLayout = ({
     }
 
     const menuList = menus.map( menu =>{
-      return <li key={menu.id} className={classes.title} onClick={()=> clickMenu(menu.menu_link)}><Typography>{menu.menu_name}</Typography></li>
+      return <li key={menu.menuId} className={classes.title} onClick={()=> clickMenu(menu.menuLink)}><Typography>{menu.menuName}</Typography></li>
     })
     return (
         <div className={classes.topArea}>

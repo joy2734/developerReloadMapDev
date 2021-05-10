@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="list" resultType="org.hdcd.community.model.Community">
-		SELECT commuNum as comNum,
+		SELECT commuNum,
 			title,
 			content,
 			contype,

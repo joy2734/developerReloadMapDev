@@ -34,10 +34,9 @@ dependencies {
 	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
 
-task copyDistToStatic(type: Copy, dependsOn: bootRun) {
-    from "$buildDir/src/main/js/public"
-    include "index.html","main.js"
-    into "$buildDir/src/main/resources/static"
+task copyWeb(type: Copy) {
+	from "$projectDir/src/main/js/public"
+	into "$projectDir/src/main/resources/static"
 }
 
 
