@@ -1,10 +1,13 @@
 plugins {
 	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "com.github.node-gradle.node" version "3.1.0"
+	id "application"
 	id 'java'
 	id 'war'
 }
 
+mainClassName= "org.hdcd.DevMapProjectApplication"
 group = 'org.hdcd'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
@@ -17,6 +20,17 @@ configurations {
 
 repositories {
 	mavenCentral()
+}
+
+def webappDir = "$projectDir/src/main/webapp"
+
+node {
+	version = '14.15.4'
+	yarnVersion = '1.22.10'
+	download=true
+	workDir = file("${project.buildDir}/nodejs")
+	npmWorkDir = file("${project.buildDir}/npm")
+	yarnWorkDir = file("${project.buildDir}/yarn")
 }
 
 dependencies {
@@ -34,11 +48,22 @@ dependencies {
 	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
 
-task copyWeb(type: Copy) {
+task copyWebApp(type: Copy, dependsOn:'appYarnBuild') { 
 	from "$projectDir/src/main/js/public"
 	into "$projectDir/src/main/resources/static"
+} 
+
+task appYarnBuild(type: YarnTask, dependsOn: 'appYarnInstall') {
+	workingDir = file("${project.projectDir}/src/main/js")
+	args = ['run', 'build'] 
+} 
+
+task appYarnInstall(type: YarnTask) { 
+	workingDir = file("${project.projectDir}/src/main/js") 
+	args = ["install"] 
 }
 
+//bootRun.mustRunAfter copyWebApp
 
 test {
 	useJUnitPlatform()

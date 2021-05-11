@@ -6,12 +6,12 @@ const useStyles = makeStyles((theme) => ({
     main: {
         display:'flex',
         margin: '40px auto',
-        maxWidth: '1000px'
+        maxWidth: '850px'
     },
     backendRoadMap :{
         backgroundImage: `url(${backendImg})`,
-        width: '1000px',
-        height: '2550px',
+        width: '850px',
+        height: '2250px',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%'
     }

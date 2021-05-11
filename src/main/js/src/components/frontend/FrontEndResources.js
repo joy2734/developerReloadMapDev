@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     main: {
         display:'flex',
         margin: '0px auto',
-        maxWidth: '1000px',
+        maxWidth: '850px',
         flexDirection: 'column',
         margin: '50px auto',
         '& ul li':{

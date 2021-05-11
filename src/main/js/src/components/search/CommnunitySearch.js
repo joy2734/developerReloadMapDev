@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
         margin: '10px'
     },
     textinput:{
+        width: '150px',
+        margin: '10px',
         borderBottom: '1px solid rgba(0, 0, 0, 0.42)'
     },
     button:{
@@ -73,7 +75,7 @@ const CommnunitySearch = ({
                 </Select>
             </FormControl>
             {/* 로그인해야보이게도해놔야함. */}
-            <InputBase className={[classes.textinput,classes.field]} placeholder="검색어를 입력"/>
+            <InputBase className={classes.textinput} placeholder="검색어를 입력"/>
             <Button className={classes.button} onClick={()=> console.log('등록창전환')} variant="contained" color="primary">검색</Button>
         </div>
     )

@@ -6,12 +6,12 @@ const useStyles = makeStyles((theme) => ({
     main: {
         display:'flex',
         margin: '20px auto',
-        maxWidth: '1000px'
+        maxWidth: '850px'
     },
     frontRoadMap:{
         backgroundImage: `url(${frontendImg})`,
-        width: '1000px',
-        height: '2850px',
+        width: '850px',
+        height: '2450px',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
         marginTop: '40px'

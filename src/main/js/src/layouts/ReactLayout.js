@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center'
     },
     reactRoadMap:{
-        width: '1000px',
-        marginTop: '20px',
+        width: '850px',
+        margin: '40px auto',
         '& a':{
             color: '#007bff',
             textDecoration: 'none',
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     },
     reactRoadImg: {
         backgroundImage: `url(${reactImg})`,
-        width: '1000px',
-        height: '1250px',
+        width: '850px',
+        height: '1050px',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
         marginTop: '20px'

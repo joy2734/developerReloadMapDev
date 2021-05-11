@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
     },
     devOpsRoadMap :{
         backgroundImage: `url(${devOpsImg})`,
-        width: '1000px',
-        height: '1900px',
+        width: '850px',
+        height: '1650px',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
         marginTop: '20px'
