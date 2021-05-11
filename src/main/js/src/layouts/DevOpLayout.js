@@ -5,9 +5,11 @@ import devOpsImg from '../assets/images/devops.png';
 const useStyles = makeStyles((theme) => ({
     container: {
         display:'flex',
-        margin: '0px auto',
         borderTop: '1px solid #eaeaea',
         justifyContent: 'center'
+    },
+    devOpWrap:{
+        margin: '30px auto'
     },
     devOpsRoadMap :{
         backgroundImage: `url(${devOpsImg})`,
@@ -27,7 +29,9 @@ const DevOpLayout = ({
 
     return(
         <div className={classes.container}>
-            <div className={classes.devOpsRoadMap}></div>
+            <div className={classes.devOpWrap}>
+                <div className={classes.devOpsRoadMap}></div>
+            </div>
         </div>
     )
 }

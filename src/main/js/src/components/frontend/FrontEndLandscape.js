@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
         width: '1000px',
         height: '2850px',
         backgroundRepeat: 'no-repeat',
-        backgroundSize: '100%'
+        backgroundSize: '100%',
+        marginTop: '40px'
     }
 }));
 

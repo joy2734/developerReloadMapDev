@@ -12,7 +12,13 @@ const useStyles = makeStyles((theme) => ({
     },
     reactRoadMap:{
         width: '1000px',
-        marginTop: '20px'
+        marginTop: '20px',
+        '& a':{
+            color: '#007bff',
+            textDecoration: 'none',
+            backgroundColor: 'transparent',
+            fontWeight: '600'
+        }
     },
     reactRoadImg: {
         backgroundImage: `url(${reactImg})`,
@@ -34,13 +40,16 @@ const DevOpLayout = ({
         <div className={classes.container}>
             <div className={classes.reactRoadMap}>
                 <Typography>
-                    The intent of this guide is to give you an idea about the React ecosystem and to help guide your learning if you are confused. We have another roadmap on the Frontend Development that focuses on the frontend development if you are interested in that.
-                    <br/>
-                    Also, please note that the list below is exhaustive, and the items are listed in no particular order. You don't need to learn everything listed in the picture, however knowing what you don't know is as important as knowing things.
+                    The intent of this guide is to give you an idea about the React ecosystem and to help guide your learning if you are confused. 
+                    We have another <a href="#home">roadmap on the Frontend Development</a> that focuses on the frontend development if you are interested in that.
+                    <br/><br/>
+                    Also, please note that the list below is exhaustive, and the items are listed in no particular order. You don't need to learn everything
+                     listed in the picture, however knowing what you don't know is as important as knowing things.
                 </Typography>
                 <div className={classes.reactRoadImg}></div>
                 <Typography>
-                    Please note that the list is opinionated, and you might have different opinions than those of the author. Having said that, we would love to hear your opinions and incorporate them in the picture if suitable.
+                    Please note that the list is opinionated, and you might have different opinions than those of the author. Having said that,
+                    <a href="#home">we would love to hear your opinions</a> and incorporate them in the picture if suitable.
                 </Typography>
             </div>
         </div>

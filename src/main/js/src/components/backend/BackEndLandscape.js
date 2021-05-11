@@ -5,7 +5,7 @@ import backendImg from '../../assets/images/backend.png';
 const useStyles = makeStyles((theme) => ({
     main: {
         display:'flex',
-        margin: '20px auto',
+        margin: '40px auto',
         maxWidth: '1000px'
     },
     backendRoadMap :{
