@@ -31,8 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			title,
 			content,
 			contype,
-			regDate,
-			modifyDate,
+			DATE_FORMAT(regDate, '%y-%m-%d') AS regDate,
+			DATE_FORMAT(modifyDate, '%y-%m-%d') AS modifyDate,
 			writer
 		FROM COMMUNITY_INFO
 		WHERE commuNum=#{commuNum}
@@ -58,8 +58,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			title,
 			content,
 			contype,
-			regDate,
-			modifyDate,
+			DATE_FORMAT(regDate, '%y-%m-%d') AS regDate,
+			DATE_FORMAT(modifyDate, '%y-%m-%d') AS modifyDate,
 			writer
 		FROM COMMUNITY_INFO
 		<if test="title != '' ">

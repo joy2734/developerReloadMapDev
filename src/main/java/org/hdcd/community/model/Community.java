@@ -13,7 +13,8 @@ public class Community {
 	private int commuNum;
 	private String title="";
 	private String content="";
-	private String type="";	//글타입 front,back,devop,android...
-	private Date regDate;
-	private Date modifyDate;
+	private String contype="";//글타입 front,back,devop,android...
+	private String writer="";	
+	private String regDate;
+	private String modifyDate;
 }

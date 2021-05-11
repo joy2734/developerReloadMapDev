@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 import clsx from 'clsx';
 import {
   HashRouter as Router,
@@ -18,6 +19,7 @@ import {
   CommunityLayout} from './layouts';
 import {useSelector} from 'react-redux';
 import { hot } from 'react-hot-loader/root';
+import {titleChangeAction} from './store/actions/RoadMapAction';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -44,6 +46,11 @@ function App() {
     title,
     subTitle
   }= useSelector(store => store.titleChangeReducer);
+  var dispatch = useDispatch();
+  //새로고침시.
+  useEffect(()=>{
+    dispatch(titleChangeAction(location.href.split("/#/")[1]))
+  }, []);
 
   return (
     <Router>

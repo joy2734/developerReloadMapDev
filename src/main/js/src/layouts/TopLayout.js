@@ -44,9 +44,9 @@ const TopLayout = ({
     const [menus, setMenus] = useState([]);
     const history = useHistory();
     var dispatch = useDispatch();
-  
+
     useEffect(()=>{
-      fetch('http://localhost:8080/menu')
+      fetch('/menu')
       .then(resp => { return resp.json() })
       .then(resp => setMenus(resp))
     }, []);

@@ -21,8 +21,12 @@ module.exports = {
     hot: true,
     inline: true,
     port: 3000,
-    publicPath: '/'
+    publicPath: '/',
     //contentBase: __dirname + '/dist/'
+    proxy:{
+      '/list': 'http://localhost:8080/list',
+      '/menu': 'http://localhost:8080/menu',
+    }
   },
   module: {
         rules: [
