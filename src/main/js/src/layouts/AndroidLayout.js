@@ -6,6 +6,7 @@ import pickLangImg from '../assets/images/pickLanguage.svg';
 import githubImg from '../assets/images/github.png';
 import fundImg from '../assets/images/theFundamentals.png';
 import buildAppImg from '../assets/images/buildApplication.png';
+import SocialSticker from "../components/sticker/SocialSticker";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
     androidRoadMap:{
         width: '850px',
-        margin: '40px auto',
+        margin: '40px 0px 40px 10px',
         '& a':{
             color: '#007bff',
             textDecoration: 'none',
@@ -67,6 +68,7 @@ const AndroidLayout = ({
 
     return(
         <div className={classes.container}>
+            <SocialSticker/>
             <div className={classes.androidRoadMap}>
                 <Typography>
                     The intent of this guide is to give you an idea about the Android development landscape and to help guide your learning if you are confused. 

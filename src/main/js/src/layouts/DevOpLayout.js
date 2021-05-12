@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import devOpsImg from '../assets/images/devops.png';
+import SocialSticker from "../components/sticker/SocialSticker";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -9,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center'
     },
     devOpWrap:{
+        display: 'flex',
         margin: '30px auto'
     },
     devOpsRoadMap :{
@@ -30,6 +32,7 @@ const DevOpLayout = ({
     return(
         <div className={classes.container}>
             <div className={classes.devOpWrap}>
+                <SocialSticker/>
                 <div className={classes.devOpsRoadMap}></div>
             </div>
         </div>

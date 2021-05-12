@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'column',
         position: 'sticky',
         top: '60px',
-        left: '30px'
+        left: '150px',
+        width: '30px',
+        height: '220px'
     }
 }));
 

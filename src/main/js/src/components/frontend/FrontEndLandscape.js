@@ -5,7 +5,6 @@ import frontendImg from '../../assets/images/frontend.png';
 const useStyles = makeStyles((theme) => ({
     main: {
         display:'flex',
-        margin: '20px auto',
         maxWidth: '850px'
     },
     frontRoadMap:{
@@ -14,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         height: '2450px',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100%',
-        marginTop: '40px'
+        margin: '40px 0px 40px 10px',
     }
 }));
 

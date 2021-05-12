@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between'
     },
     button:{
-        width: '100px'
+        width: '100px',
+        marginLeft: '10px' 
     },
     form:{
         display: 'flex',
@@ -37,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
     },
     content:{
         height: '500px',
-        border: '1px solid black'
+        border: '1px solid black',
+        marginBottom: '20px'
     }
 }));
 
@@ -74,10 +76,16 @@ const CommunityReadForm = ({
                     onClick={()=> dispatch(changePageAction('home'))} 
                     variant="contained" 
                 color="primary">홈으로</Button>
-                <Button className={classes.button} 
-                    onClick={()=> dispatch(changePageAction('home'))} 
-                    variant="contained" 
-                color="primary">수정</Button>
+                <div>
+                    <Button className={classes.button} 
+                        onClick={()=> dispatch(changePageAction('home'))} 
+                        variant="contained" 
+                    color="primary">수정</Button>
+                    <Button className={classes.button} 
+                        onClick={()=> dispatch(changePageAction('home'))} 
+                        variant="contained" 
+                    color="primary">삭제</Button>
+                </div>
             </div>
         </div>
     )

@@ -17,7 +17,6 @@ import {
   ReactLayout,
   AndroidLayout,
   CommunityLayout} from './layouts';
-import SocialSticker from "./components/sticker/SocialSticker";
 import {useSelector} from 'react-redux';
 import { hot } from 'react-hot-loader/root';
 import {titleChangeAction} from './store/actions/RoadMapAction';
@@ -62,7 +61,6 @@ function App() {
               <p className={classes.subtitle}>{subTitle}</p>
           </div>
       </div>
-      <SocialSticker/>
       <Switch>
         <Route path="/home" component={MiddleLayout} ></Route>
         <Route path="/front" component={FrontEndLayout} ></Route>

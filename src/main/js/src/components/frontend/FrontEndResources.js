@@ -5,10 +5,9 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
     main: {
         display:'flex',
-        margin: '0px auto',
         maxWidth: '850px',
         flexDirection: 'column',
-        margin: '50px auto',
+        margin: '40px 0px 40px 10px',
         '& ul li':{
             padding: '1px',
             '& a':{

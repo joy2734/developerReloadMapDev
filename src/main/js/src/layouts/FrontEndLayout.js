@@ -7,6 +7,7 @@ import {
     useHistory
   } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
+import SocialSticker from "../components/sticker/SocialSticker";
 import {
     FrontEndLandscape,
     FrontEndResources
@@ -30,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
             bottom: '-1px',
             position: 'relative'
         },
+    },
+    content:{
+        display: 'flex',
+        justifyContent: 'center'
     }
 }));
 
@@ -55,7 +60,10 @@ const FrontEndLayout = ({
                 <a style={tabActive == '1' ? activeStyle: []} onClick={()=> clickLink('1') } >Landscape</a>&nbsp;&nbsp;
                 <a style={tabActive == '2' ? activeStyle: []} onClick={()=> clickLink('2') } >Resources</a>
             </div>
-            {tabActive == '1' ?  <FrontEndLandscape/> : <FrontEndResources/>}
+            <div className={classes.content}>
+                <SocialSticker/>
+                {tabActive == '1' ?  <FrontEndLandscape/> : <FrontEndResources/>}
+            </div>
         </div>
     )
 }

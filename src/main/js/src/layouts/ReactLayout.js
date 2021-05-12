@@ -2,17 +2,17 @@ import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import reactImg from '../assets/images/react.png';
+import SocialSticker from "../components/sticker/SocialSticker";
 
 const useStyles = makeStyles((theme) => ({
     container: {
         display:'flex',
-        margin: '0px auto',
         borderTop: '1px solid #eaeaea',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     reactRoadMap:{
         width: '850px',
-        margin: '40px auto',
+        margin: '40px 0px 40px 10px',
         '& a':{
             color: '#007bff',
             textDecoration: 'none',
@@ -38,6 +38,7 @@ const DevOpLayout = ({
 
     return(
         <div className={classes.container}>
+            <SocialSticker/>
             <div className={classes.reactRoadMap}>
                 <Typography>
                     The intent of this guide is to give you an idea about the React ecosystem and to help guide your learning if you are confused. 
