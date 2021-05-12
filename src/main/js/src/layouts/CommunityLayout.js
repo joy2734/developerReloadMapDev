@@ -10,6 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import {conTypeMap} from '../variables/formatter';
+import { useSelector, useDispatch } from "react-redux";
+import {initCommuAction} from '../store/actions/RoadMapAction';
 import CommnunitySearch from '../components/search/CommnunitySearch';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,20 +50,22 @@ const CommunityLayout = ({
 
 }) =>{
     const classes = useStyles();
-    const [comment, setComment] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
-
-    const commentsPerPage = 10
-    const pageVisited = pageNumber * commentsPerPage; //???
-    const pageTotalNum = comment.length;
+    const comments = useSelector(store => store.communityReducer);
+    const dispatch = useDispatch();
+    const commentPerPage = 10
+    const pageVisited = pageNumber * commentPerPage; //???
+    const pageTotalNum = comments.length;
     
     useEffect(()=>{
         fetch('/list')
         .then(resp => { return resp.json() })
-        .then(resp => setComment(resp))
+        .then(resp => {
+            dispatch(initCommuAction(resp));
+        })
       }, []);
 
-    const commentsPage = comment.slice(pageVisited, pageVisited + commentsPerPage)
+    const commentPage = comments.slice(pageVisited, pageVisited + commentPerPage)
     .map((comment)=>{
         return (
             <TableRow key={comment.commuNum}>
@@ -77,7 +81,7 @@ const CommunityLayout = ({
         )
     });
 
-    const pageCount = Math.ceil(comment.length / commentsPerPage);
+    const pageCount = Math.ceil(comments.length / commentPerPage);
 
     const changePage = (evt, pageNum) => {
         setPageNumber(pageNum-1)
@@ -98,14 +102,13 @@ const CommunityLayout = ({
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                        {commentsPage}
+                        {commentPage}
                     </TableBody>
                 </Table>
             </TableContainer>
             <div className={classes.paging}>
                 <Pagination className={classes.pager} 
                     defaultPage={1} 
-                    count={pageTotalNum} 
                     count={pageCount}
                     variant="outlined" color="primary"
                     onChange={changePage}

@@ -1,6 +1,10 @@
 import { combineReducers } from "redux";
-import {titleChangeReducer} from "./RoadMapReducer";
+import {
+    titleChangeReducer,
+    communityReducer
+} from "./RoadMapReducer";
 
 export const rootReducer = combineReducers({
-    titleChangeReducer
+    titleChangeReducer,
+    communityReducer
 })

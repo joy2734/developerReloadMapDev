@@ -1,3 +1,5 @@
+import React, {useState, useEffect} from 'react';
+
 const titleMap = {
     home : ['Developer Roadmaps', 'Step by step guides and paths to learn different tools or technologies'],
     front : ['Frontend Developer', 'Step by step guide to becoming a modern frontend developer'],
@@ -7,7 +9,6 @@ const titleMap = {
     android: ['Android Developer', 'Step by step guide to becoming an Android developer'],
     community: ['Community','It is a space for communication among web users']
 }
-
 
 export const titleChangeReducer = (state ={
     title: 'Developer Roadmaps',
@@ -20,6 +21,16 @@ export const titleChangeReducer = (state ={
         default:
             return state;
     }
-
-
 }
+
+export const communityReducer = (state = [], action) =>{
+    //console.log(action.payload)
+    switch(action.type){
+        case 'COMM_INIT':
+            return action.payload;
+        case 'COMM_SRCH':
+            return action.payload;
+        default:
+            return state;
+    }
+};

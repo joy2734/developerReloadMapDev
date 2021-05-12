@@ -6,7 +6,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
+import {searchCommuAction} from '../../store/actions/RoadMapAction';
+import { useDispatch } from "react-redux";
 import {searchDateMap, searchTypeMap} from '../../variables/formatter';
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -34,7 +37,9 @@ const CommnunitySearch = ({
 }) =>{
     const classes = useStyles();
     const [searchDate, setSearchDate] = React.useState('all');
-    const [searchType, setSearchType] = React.useState(1);
+    const [searchType, setSearchType] = React.useState('title');
+    const [searchInput, setSearchInput] = React.useState("");
+    const dispatch = useDispatch();
 
     const sdateHandleChange = (event) => {
         setSearchDate(event.target.value);
@@ -43,6 +48,15 @@ const CommnunitySearch = ({
     const stypeHandleChange = (event) => {
         setSearchType(event.target.value);
     };
+
+    const onCommunitySearch = () =>{
+
+        let url = '/list?' + encodeURIComponent(searchType) + '=' + encodeURIComponent(searchInput) + '&dType=' + encodeURIComponent(searchDate)
+        fetch(url)
+        .then(resp => { return resp.json() })
+        .then(resp => {dispatch(searchCommuAction(resp))
+        }, []);
+    }
 
     return(
         <div className={classes.container}>
@@ -75,8 +89,8 @@ const CommnunitySearch = ({
                 </Select>
             </FormControl>
             {/* 로그인해야보이게도해놔야함. */}
-            <InputBase className={classes.textinput} placeholder="검색어를 입력"/>
-            <Button className={classes.button} onClick={()=> console.log('등록창전환')} variant="contained" color="primary">검색</Button>
+            <InputBase className={classes.textinput} placeholder="검색어를 입력" onChange={(evt) => setSearchInput(evt.target.value)} />{/* setSearchInput(evt.target.value) */}
+            <Button className={classes.button} onClick={()=> onCommunitySearch()} variant="contained" color="primary">검색</Button>
         </div>
     )
 }

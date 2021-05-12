@@ -24,8 +24,8 @@ export const searchDateMap = {
 /* 커뮤니티 게시판 검색 내용 select formattingMap */
 
 export const searchTypeMap = {
-    1 :'제목+내용',
-    2 :'글작성자',
-    3 :'댓글내용',
-    4 :'댓글작성자'
+    'title' :'제목+내용',
+    'writer' :'글작성자',
+    'commConent' :'댓글내용',
+    'commWriter' :'댓글작성자'
 }
