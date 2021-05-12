@@ -34,3 +34,21 @@ export const communityReducer = (state = [], action) =>{
             return state;
     }
 };
+
+export const commPageReducer = (state = {mode: 'home'}, action) =>{
+    switch(action.type){
+        case 'CHG_MODE':
+            return {mode: action.payload};
+        default:
+            return state;
+    }
+};
+
+export const commLoadIdReducer = (state = 0, action) =>{
+    switch(action.type){
+        case 'COMM_LOAD':
+            return action.payload
+        default:
+            return 0;
+    }
+}

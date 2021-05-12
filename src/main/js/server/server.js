@@ -18,10 +18,15 @@ app.get('/list', (req, res)=>{
             writer
         FROM COMMUNITY_INFO`;
     Object.keys(params).forEach(function(param, idx){
-        if(params[param] && params[param] != "")
-            query += (idx == 0 ? ' WHERE ': ' OR ') + param + ' Like\"%'+ params[param] +'%\"'
-        if(param == 'title' && params[param] != "")
-            query += ( ' OR ' ) + 'content' + ' Like\"%'+ params[param] +'%\"'
+        if(param == 'commuNum'){
+            query += ' WHERE ' + param + '=\"'+ params[param] +'\"'
+        }else{
+            if(params[param] && params[param] != "")
+                query += (idx == 0 ? ' WHERE ': ' OR ') + param + ' Like\"%'+ params[param] +'%\"'
+            if(param == 'title' && params[param] != "")
+                query += ( ' OR ' ) + 'content' + ' Like\"%'+ params[param] +'%\"'
+        }
+
     });
 
     if(dType && dType != "all"){

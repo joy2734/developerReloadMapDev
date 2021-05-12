@@ -6,37 +6,30 @@ export const titleChangeAction = (url) =>{
     }
 }
 
-export const initCommuAction = (comm) =>{
+export const initCommuAction = (comms) =>{
     return {
         type: 'COMM_INIT',
-        payload: comm
+        payload: comms
     }
 }
 
-export const searchCommuAction = (comm) =>{
+export const searchCommuAction = (comms) =>{
     return {
         type: 'COMM_SRCH',
+        payload: comms
+    }
+}
+
+export const loadCommuAction = (comm) =>{
+    return {
+        type: 'COMM_LOAD',
         payload: comm
     }
 }
 
-export const saveCommuAction = (comm) =>{
+export const changePageAction = (page) =>{
     return {
-        type: 'COMM_SAVE',
-        payload: comm
-    }
-}
-
-export const modifyCommuAction = (comm) =>{
-    return {
-        type: 'COMM_MOD',
-        payload: comm
-    }
-}
-
-export const deleteCommuAction = (comm) =>{
-    return {
-        type: 'COMM_DEL',
-        payload: comm
+        type: 'CHG_MODE',
+        payload: page
     }
 }

@@ -1,48 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Pagination from '@material-ui/lab/Pagination';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import {conTypeMap} from '../variables/formatter';
 import { useSelector, useDispatch } from "react-redux";
-import {initCommuAction} from '../store/actions/RoadMapAction';
-import CommnunitySearch from '../components/search/CommnunitySearch';
+import {changePageAction} from '../store/actions/RoadMapAction';
+import {
+    CommnunityForm,
+    CommnunityRead,
+    CommunityReadForm
+} from '../components/search';
 
 const useStyles = makeStyles((theme) => ({
     container: {
         display:'flex',
         justifyContent: 'center',
         flexDirection:'column',
-        borderTop: '1px solid #eaeaea',
-        margin: '10px 200px'
-    },
-    grid: {
-        minWidth: 650
-    },
-    paging:{
-        display:'flex',
-        alignItems: 'center'
-    },
-    pager:{
-        margin: '10px auto'
-    },
-    field:{
-        width: '100px',
-        margin: '10px'
-    },
-    searchForm:{
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    button:{
-        width: '100px',
-        height: '30px'
+        borderTop: '1px solid #eaeaea'
     }
 }));
 
@@ -50,72 +21,20 @@ const CommunityLayout = ({
 
 }) =>{
     const classes = useStyles();
-    const [pageNumber, setPageNumber] = useState(0);
-    const comments = useSelector(store => store.communityReducer);
+    const {
+        mode
+    }= useSelector(store => store.commPageReducer);
     const dispatch = useDispatch();
-    const commentPerPage = 10
-    const pageVisited = pageNumber * commentPerPage; //???
-    const pageTotalNum = comments.length;
-    
+
     useEffect(()=>{
-        fetch('/list')
-        .then(resp => { return resp.json() })
-        .then(resp => {
-            dispatch(initCommuAction(resp));
-        })
+        dispatch(changePageAction('home'))
       }, []);
 
-    const commentPage = comments.slice(pageVisited, pageVisited + commentPerPage)
-    .map((comment)=>{
-        return (
-            <TableRow key={comment.commuNum}>
-                <TableCell component="th" scope="row">
-                    {comment.title}
-                </TableCell>
-                <TableCell align="center">{comment.content}</TableCell>
-                <TableCell align="center">{conTypeMap[comment.contype]}</TableCell>
-                <TableCell align="center">{comment.writer}</TableCell>
-                <TableCell align="center">{comment.regDate}</TableCell>
-                <TableCell align="center">{comment.modifyDate}</TableCell>
-            </TableRow>
-        )
-    });
-
-    const pageCount = Math.ceil(comments.length / commentPerPage);
-
-    const changePage = (evt, pageNum) => {
-        setPageNumber(pageNum-1)
-    };
-
+    console.log(mode);
     return(
         <div className={classes.container}>
-            <TableContainer component={Paper}>
-                <Table className={classes.grid} size="small" aria-label="a dense table">
-                    <TableHead>
-                    <TableRow>
-                        <TableCell>제목</TableCell>
-                        <TableCell align="center">내용</TableCell>
-                        <TableCell align="center">타입</TableCell>
-                        <TableCell align="center">작성자</TableCell>
-                        <TableCell align="center">등록일</TableCell>
-                        <TableCell align="center">수정일</TableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {commentPage}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <div className={classes.paging}>
-                <Pagination className={classes.pager} 
-                    defaultPage={1} 
-                    count={pageCount}
-                    variant="outlined" color="primary"
-                    onChange={changePage}
-                />
-                <Button className={classes.button} onClick={()=> console.log('등록창전환')} variant="contained" color="primary">등록</Button>
-            </div>
-            <CommnunitySearch/>
+            {mode == 'home' ? 
+                <CommnunityRead /> : mode == 'create' || mode == 'update' ? <CommnunityForm mode={mode}/> : <CommunityReadForm /> }
         </div>
     )
 }
