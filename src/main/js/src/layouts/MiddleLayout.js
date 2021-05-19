@@ -30,7 +30,7 @@ const MiddleLayout = ({
     const [contents, setContent] = useState({});
 
     useEffect(()=>{
-        fetch('../../data/contentList.json')
+        fetch(getContextPath()+'../../data/contentList.json')
         .then(resp => { return resp.json() })
         .then(resp => {
            setContent(resp)

@@ -51,7 +51,7 @@ const CommnunitySearch = ({
 
     const onCommunitySearch = () =>{
 
-        let url = '/list?' + encodeURIComponent(searchType) + '=' + encodeURIComponent(searchInput) + '&dType=' + encodeURIComponent(searchDate)
+        let url = getContextPath() + 'list?' + encodeURIComponent(searchType) + '=' + encodeURIComponent(searchInput) + '&dType=' + encodeURIComponent(searchDate)
         fetch(url)
         .then(resp => { return resp.json() })
         .then(resp => {dispatch(searchCommuAction(resp))

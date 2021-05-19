@@ -53,7 +53,7 @@ const CommunityReadForm = ({
     const commId = useSelector(store => store.commLoadIdReducer);
 
     useEffect(()=>{
-        fetch('/list?commuNum='+commId)
+        fetch(getContextPath() + 'list?commuNum='+commId)
         .then(resp => { return resp.json() })
         .then(resp => {
             setCommnet(resp[0])

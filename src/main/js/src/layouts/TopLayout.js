@@ -46,7 +46,7 @@ const TopLayout = ({
     var dispatch = useDispatch();
 
     useEffect(()=>{
-      fetch('/menu')
+      fetch(getContextPath() + 'menu')
       .then(resp => { return resp.json() })
       .then(resp => setMenus(resp))
     }, []);

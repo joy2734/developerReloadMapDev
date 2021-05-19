@@ -58,7 +58,7 @@ const CommnunityRead = ({
     const pageVisited = pageNumber * commentPerPage; //???
 
     useEffect(()=>{
-        fetch('/list')
+        fetch(getContextPath() + 'list')
         .then(resp => { return resp.json() })
         .then(resp => {
             dispatch(initCommuAction(resp));
