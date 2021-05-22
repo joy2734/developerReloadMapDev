@@ -52,23 +52,24 @@ const CommnunityRead = ({
 }) =>{
     const classes = useStyles();
     const [pageNumber, setPageNumber] = useState(0);
-    const comments = useSelector(store => store.communityReducer);
-    const dispatch = useDispatch();
+    const [comments, setComments] = useState([]);
+    //const dispatch = useDispatch();
+    //const posts = useSelector(state => state)
     const commentPerPage = 10
     const pageVisited = pageNumber * commentPerPage; //???
 
-    useEffect(()=>{
-        fetch(getContextPath() + 'list')
-        .then(resp => { return resp.json() })
-        .then(resp => {
-            dispatch(initCommuAction(resp));
-        })
-      }, []);
+    // useEffect(()=>{
+    //     fetch(getContextPath() + 'list')
+    //     .then(resp => { return resp.json() })
+    //     .then(resp => {
+    //         dispatch(initCommuAction(resp));
+    //     })
+    //   }, []);
 
-    const loadComment = (commId) =>{
-        dispatch(changePageAction('read'))
-        dispatch(loadCommuAction(commId))
-    };
+    // const loadComment = (commId) =>{
+    //     dispatch(changePageAction('read'))
+    //     dispatch(loadCommuAction(commId))
+    // };
 
     const commentPage = comments.slice(pageVisited, pageVisited + commentPerPage)
     .map((comment)=>{

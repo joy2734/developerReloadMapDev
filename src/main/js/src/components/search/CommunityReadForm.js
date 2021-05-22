@@ -7,6 +7,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import {changePageAction} from '../../store/actions/RoadMapAction';
 import {FormControl} from '@material-ui/core';
 import { InputLabel, Input, FormHelperText } from '@material-ui/core';
+import {postsAction} from '../../modules';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -50,14 +51,9 @@ const CommunityReadForm = ({
     const classes = useStyles();
     const dispatch = useDispatch();
     const [comment, setCommnet] = useState({});
-    const commId = useSelector(store => store.commLoadIdReducer);
 
     useEffect(()=>{
-        fetch(getContextPath() + 'list?commuNum='+commId)
-        .then(resp => { return resp.json() })
-        .then(resp => {
-            setCommnet(resp[0])
-        })
+        dispatch(postAction());
     }, []);
 
     console.log(comment);

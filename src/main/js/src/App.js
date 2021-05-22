@@ -19,7 +19,7 @@ import {
   CommunityLayout} from './layouts';
 import {useSelector} from 'react-redux';
 import { hot } from 'react-hot-loader/root';
-import {titleChangeAction} from './store/actions/RoadMapAction';
+import {postsAction, getPosts} from './modules/post';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,14 +42,18 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const {
-    title,
-    subTitle
-  }= useSelector(store => store.titleChangeReducer);
+  const [title, setTitle] = useState('');
+  const [subTitle, setSubTitle] = useState('');
+  // const {
+  //   title,
+  //   subTitle
+  // }= useSelector(store => store.titleChangeReducer);
   var dispatch = useDispatch();
   //새로고침시.
+  
   useEffect(()=>{
-    dispatch(titleChangeAction(location.href.split("/#/")[1] || "home"))
+    //dispatch(postsAction(getPosts))
+    //dispatch(titleChangeAction(location.href.split("/#/")[1] || "home"))
   }, []);
 
   return (
