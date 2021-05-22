@@ -69,14 +69,14 @@ export const reducerUtils = {
 export const handleAsyncActions = (type, key, keepData = false) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
     return (state, action) => {
+      console.log(action.type)
       switch (action.type) {
         case type:
           return produce(state, draft =>{
-            draft[key] = reducerUtils.loading(keepData ? state[key] : null)
+            draft[key] = reducerUtils.loading(null)
           })
         case SUCCESS:
           return produce(state, draft =>{
-            console.log(state)
             draft[key] = reducerUtils.success(action.payload)
           })
         case ERROR:

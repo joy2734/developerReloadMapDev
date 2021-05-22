@@ -7,7 +7,6 @@ import {
     CommnunityRead,
     CommunityReadForm
 } from '../components/search';
-import {postsAction, getPosts} from '../modules/post';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -27,10 +26,10 @@ const CommunityLayout = ({
     // }= useSelector(store => store.commPageReducer);
     const dispatch = useDispatch();
 
-    const posts = useMemo(
-      () => dispatch(postsAction(getPosts))
-    , [dispatch]);
-    console.log(posts)
+    // const posts = useMemo(
+    //   () => dispatch(postsAction(getPosts))
+    // , [dispatch]);
+    // console.log(posts)
 
     // useEffect(()=>{
     //     dispatch(changePageAction('home'))

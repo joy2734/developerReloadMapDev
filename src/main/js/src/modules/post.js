@@ -40,7 +40,7 @@ function* getPostsSaga() {
         payload: posts
       }); // 성공 액션 디스패치
     } catch (e) {
-      console.log('error:'+e)
+      //console.log('error:'+e)
       yield put({
         type: GET_POSTS_ERROR,
         error: true,
@@ -86,11 +86,11 @@ export default function posts(state = initialState, action) {
         case GET_POSTS:
         case GET_POSTS_SUCCESS:
         case GET_POSTS_ERROR:
-          return handleAsyncActions(GET_POSTS, 'posts', true)(state, action);
+          return handleAsyncActions(GET_POSTS, 'posts')(state, action);
         case GET_POST:
         case GET_POST_SUCCESS:
         case GET_POST_ERROR:
-          return handleAsyncActionsById(GET_POST, 'post', true)(state, action);
+          return handleAsyncActionsById(GET_POST, 'post')(state, action);
         default:
           return state;
     }
