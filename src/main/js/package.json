@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve",
-    "electron": "electron .",
     "build": "webpack build",
+    "ele-start": "electron main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -53,7 +55,13 @@
     "url-loader": "^4.1.1",
     "webpack-dev-middleware": "^4.1.0",
     "webpack-dev-server": "^3.11.0",
-    "webpack-hot-middleware": "^2.25.0"
+    "webpack-hot-middleware": "^2.25.0",
+    "electron": "6.0.0",
+    "electron-builder": "21.2.0",
+    "eslint": "6.1.0",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "prettier": "1.18.2"
   },
   "devDependencies": {
     "@material-ui/core": "^4.11.3",
@@ -61,7 +69,7 @@
     "babel-register": "^6.26.0",
     "bootstrap": "^4.6.0",
     "chokidar": "^3.5.1",
-    "electron": "^12.0.8",
+    "electron-util": "0.12.1",
     "react-bootstrap": "^1.4.3",
     "react-percent-bar": "^0.0.2",
     "react-redux": "^7.2.2",
