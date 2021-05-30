@@ -1,9 +1,11 @@
 import { all } from "@redux-saga/core/effects";
 import { combineReducers } from "redux";
 import posts, { postsSaga } from './post';
+import {interactReducer} from "./interaction";
 
 const rootReducer = combineReducers({
-    posts
+    posts,
+    interactReducer
 })
 
 export function* rootSaga(){
@@ -11,7 +13,8 @@ export function* rootSaga(){
 }
 
 export default rootReducer;
-/* titleChangeReducer,
+
+/* titleChangeReducer V,
     communityReducer,
     commPageReducer,
     commLoadIdReducer */

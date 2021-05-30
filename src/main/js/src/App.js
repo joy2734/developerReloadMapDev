@@ -7,6 +7,7 @@ import {
   Route 
 } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
+import Login from "./components/login/Login";
 import {
   BottomLayout,
   MiddleLayout, 
@@ -19,7 +20,7 @@ import {
   CommunityLayout} from './layouts';
 import {useSelector} from 'react-redux';
 import { hot } from 'react-hot-loader/root';
-import {postsAction, getPosts} from './modules/post';
+import {titleChangeAction} from "./modules/interaction";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,23 +43,24 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [title, setTitle] = useState('');
-  const [subTitle, setSubTitle] = useState('');
-  // const {
-  //   title,
-  //   subTitle
-  // }= useSelector(store => store.titleChangeReducer);
+  const {
+    title,
+    subTitle
+  }= useSelector(store => store.interactReducer.titleInfo);
+  const {
+    isOpen,
+    formStatus
+  } = useSelector(store => store.interactReducer.login);
   var dispatch = useDispatch();
-  //새로고침시.
   
   useEffect(()=>{
     //dispatch(postsAction(getPosts))
-    //dispatch(titleChangeAction(location.href.split("/#/")[1] || "home"))
+    dispatch(titleChangeAction(location.href.split("/#/")[1] || "home"))
   }, []);
 
   return (
     <Router>
-      <TopLayout title={title} subTitle={subTitle} />
+      <TopLayout title={title} subTitle={subTitle} isOpen={isOpen} />
       <div className={classes.container}>
           <div className={classes.title}>
               <h1>{title}</h1>
@@ -75,6 +77,10 @@ function App() {
         <Route path="/community" component={CommunityLayout} ></Route>
         <Route exact={true} path="/" component={MiddleLayout} ></Route>
       </Switch>
+      <Login 
+        isOpen={isOpen}
+        formStatus={formStatus}
+      />
       <BottomLayout />
     </Router>
   );

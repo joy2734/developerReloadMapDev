@@ -13,6 +13,7 @@ import {conTypeMap} from '../../variables/formatter';
 import { useSelector, useDispatch } from "react-redux";
 import {initCommuAction, changePageAction, loadCommuAction } from '../../store/actions/RoadMapAction';
 import CommnunitySearch from './CommnunitySearch';
+import {postsAction, getPosts} from '../../modules/post';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -50,14 +51,19 @@ const useStyles = makeStyles((theme) => ({
 const CommnunityRead = ({
     mode
 }) =>{
+    const dispatch = useDispatch();
+    const posts = useSelector(state => state.posts)
     const classes = useStyles();
     const [pageNumber, setPageNumber] = useState(0);
-    const [comments, setComments] = useState([]);
-    //const dispatch = useDispatch();
+    //const [comments, setComments] = useState([]);
     //const posts = useSelector(state => state)
     const commentPerPage = 10
     const pageVisited = pageNumber * commentPerPage; //???
+    useEffect(() =>{
+        dispatch(postsAction(getPosts))
+    },[]);
 
+    //console.log(comments.posts)
     // useEffect(()=>{
     //     fetch(getContextPath() + 'list')
     //     .then(resp => { return resp.json() })
@@ -71,6 +77,9 @@ const CommnunityRead = ({
     //     dispatch(loadCommuAction(commId))
     // };
 
+    const comments = posts.posts.data || [];
+    console.log(comments)
+    
     const commentPage = comments.slice(pageVisited, pageVisited + commentPerPage)
     .map((comment)=>{
         return (
@@ -109,14 +118,14 @@ const CommnunityRead = ({
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                        {commentPage}
+                        {comments ? commentPage : <div></div>}
                     </TableBody>
                 </Table>
             </TableContainer>
             <div className={classes.paging}>
                 <Pagination className={classes.pager} 
                     defaultPage={1} 
-                    count={pageCount}
+                    count={pageCount || 0}
                     variant="outlined" color="primary"
                     onChange={changePage}
                 />

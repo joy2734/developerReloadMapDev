@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {useDispatch} from 'react-redux';
-import {titleChangeAction} from '../store/actions/RoadMapAction';
+import {titleChangeAction, loginOpenAction} from '../modules/interaction';
 import {
   useHistory
 } from "react-router-dom";
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TopLayout = ({
+  isOpen
 }) =>{
     const classes = useStyles();
     const [menus, setMenus] = useState([]);
@@ -75,7 +76,7 @@ const TopLayout = ({
                     </ul>
                 </nav>
                 </div>
-                <Button color="inherit">Login</Button>
+                <Button color="inherit" onClick={()=> dispatch(loginOpenAction(!isOpen)) }>Login</Button>
             </Toolbar>
             </AppBar>
         </div>

@@ -1,5 +1,12 @@
 //electron app config
-const {app, BrowserWindow} = require('electron');
+const {
+    app,
+    BrowserWindow,
+    Menu,
+    MenuItem,
+    Tray,
+    Notification
+} = require('electron');
 const { is, setContentSecurityPolicy } = require('electron-util');
 const config = require('./config');
 
@@ -8,8 +15,8 @@ let window;
 
 function createWindow() {
     window = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 900,
+        height: 800,
         webPreferences:{
             nodeIntegration: false //false 시 외부사이트에서 접근시 발생 위험을 피한다.
         }
@@ -39,11 +46,55 @@ function createWindow() {
         window.loadURL(config.PRODUCTION_WEB_URL);
     }
 
+    showNotification();
+
+    tray = new Tray('C:\\springtool\\sts-4.9.0.RELEASE\\workspace\\DevMapProject\\src\\main\\js\\src\\assets\\images\\sprayTalk.png')
+    const contextMenu = Menu.buildFromTemplate([
+        {label: "version", click: function(){ console.log("1111") }},
+        {label: "acknow"},
+        {label: "Item3"},
+        {label: "종료", click: function(){ app.quit() }},
+    ])
+
+    tray.setToolTip("tooltip");
+    tray.setContextMenu(contextMenu);
+
+    window.on('show', () => {
+        tray.setHighlightMode('always')
+    });
+
+    window.on('hide', () => {
+        tray.setHighlightMode('never')
+    });
+
     //윈도우 닫히면 윈도우 객체 초기화
     window.on('closed', ()=>{
         window = null;
     });
+}
 
+// custom menu
+// window 창 상단 메뉴설정
+
+const menu = new Menu()
+menu.append(new MenuItem({
+  label: 'Electron',
+  submenu: [{
+    role: 'help',
+    accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
+    click: () => { console.log('Electron rocks!') }
+  }]
+}))
+
+Menu.setApplicationMenu(menu)
+
+// Notification 설정
+function showNotification () {
+    const notification = {
+      title: 'DevMap Application',
+      body: 'DevMap Application 실행되었습니다.'
+    }
+    new Notification(notification).show()
 }
 
 //Mac OS
@@ -60,5 +111,6 @@ app.on('activate', ()=>{
         createWindow();
 });
 
+app.setUserTasks([]);
 //일렉트론이 준비되면 app 윈도우 생성
 app.on('ready', createWindow);

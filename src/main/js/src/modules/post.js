@@ -15,13 +15,13 @@ const [
     GET_POSTS,
     GET_POSTS_SUCCESS,
     GET_POSTS_ERROR
-] = createAsyncAction('GET_POSTS');
+] = createAsyncAction('post/GET_POSTS');
 
 const [
     GET_POST,
     GET_POST_SUCCESS,
     GET_POST_ERROR
-] = createAsyncAction('GET_POST');
+] = createAsyncAction('post/GET_POST');
 
 export const postsAction = createAction(GET_POSTS)
 export const postAction = createAction(GET_POST)
@@ -77,9 +77,9 @@ export function* postsSaga() {
 }
 
 const initialState = {
-    posts: reducerUtils.initial(),
-    post: reducerUtils.initial()
-  };
+  posts: reducerUtils.initial(),
+  post: reducerUtils.initial()
+};
 
 export default function posts(state = initialState, action) {
     switch (action.type) {

@@ -62,9 +62,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			DATE_FORMAT(modifyDate, '%y-%m-%d') AS modifyDate,
 			writer
 		FROM COMMUNITY_INFO
-		<if test="title != '' ">
-			WHERE title=#{title}
-		</if>
+		<where>
+			<if test="title != '' ">
+				AND title=#{title}
+			</if>
+			<if test="content != '' ">
+				AND content=#{content}
+			</if>
+			<choose>
+				<when test="dType == 'day' ">
+	                AND modifyDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 DAY ) AND NOW()
+				</when>
+				<when test="dType == 'week' ">
+	                AND modifyDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW()
+				</when>
+				<when test="dType == 'month' ">
+	                AND modifyDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()
+				</when>
+				<when test="dType == 'smonth' ">
+	                AND modifyDate  > DATE_ADD(NOW(),INTERVAL -6 MONTH )
+				</when>
+				<when test="dType == 'year' ">
+	                AND modifyDate BETWEEN DATE_ADD(NOW(),INTERVAL -1 YEAR ) AND NOW()
+				</when>
+			</choose>
+		</where>	
 	</select>
 
 </mapper>
