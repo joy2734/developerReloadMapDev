@@ -38,6 +38,15 @@ const useStyles = makeStyles((theme) => ({
   subtitle:{
       fontSize: '16px',
       color: 'rgb(68, 68, 68)'
+  },
+  modalOverlay:{
+    position: "fixed",
+    width: "100%",
+    height: "100%",
+    zIndex: "1",
+    backgroundColor: '#31465d',
+    opacity: '0.6',
+    left: '0'
   }
 }));
 
@@ -61,6 +70,7 @@ function App() {
   return (
     <Router>
       <TopLayout title={title} subTitle={subTitle} isOpen={isOpen} />
+      <div className={classes.modalOverlay} style={{display: isOpen ? "block": "none"}} ></div>
       <div className={classes.container}>
           <div className={classes.title}>
               <h1>{title}</h1>
@@ -77,11 +87,11 @@ function App() {
         <Route path="/community" component={CommunityLayout} ></Route>
         <Route exact={true} path="/" component={MiddleLayout} ></Route>
       </Switch>
+      <BottomLayout />
       <Login 
         isOpen={isOpen}
         formStatus={formStatus}
       />
-      <BottomLayout />
     </Router>
   );
 }

@@ -6,33 +6,33 @@ export const createAsyncAction = (type) =>{
 }
 
 //프로미스를 기다렷다가 결과를 패치
-// export const createPromiseSaga = (type, promiseCreator) =>{
-//     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`]
+export const createPromiseSaga = (type, promiseCreator) =>{
+    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`]
 
-//     return function* saga(action){
-//         try{
-//             const payload = yield call(promiseCreator, action.payload)
+    return function* saga(action){
+        try{
+            const payload = yield call(promiseCreator, action.payload)
 
-//             yield put({type: SUCCESS, payload})
-//         } catch (e) {
-//             yield put({type: ERROR, error: true, payload: e})
-//         }
-//     }
-// }
+            yield put({type: SUCCESS, payload})
+        } catch (e) {
+            yield put({type: ERROR, error: true, payload: e})
+        }
+    }
+}
 
-// export const createPromiseSagaById = (type, promiseCreator) =>{
-//     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`]
+export const createPromiseSagaById = (type, promiseCreator) =>{
+    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`]
 
-//     return function* saga(action){
-//         const id = action.meta;
-//         try{
-//             const payload = yield call(promiseCreator, action.payload);
-//             yield put({ type: SUCCESS, payload, meta: id})
-//         } catch(e){
-//             yield put({ type: ERROR, error: e, meta: id})
-//         }
-//     }
-// }
+    return function* saga(action){
+        const id = action.meta;
+        try{
+            const payload = yield call(promiseCreator, action.payload);
+            yield put({ type: SUCCESS, payload, meta: id})
+        } catch(e){
+            yield put({ type: ERROR, error: e, meta: id})
+        }
+    }
+}
 
 // 리듀서에서 사용 할 수 있는 여러 유틸 함수들입니다.
 export const reducerUtils = {

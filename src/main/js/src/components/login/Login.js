@@ -1,18 +1,51 @@
-import React, {useState, useEffect, useRef, useCallback } from 'react';
+import React, {useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ReactModalLogin from "react-modal-login";
+import CancelOutlined from '@material-ui/icons/CancelOutlined';
 import {loginOpenAction, loginFormChangeAction} from '../../modules/interaction';
 import {useDispatch, useSelector} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import {
+    loginAction
+    ,signUpAction
+    ,chgPasswdAction
+} from '../../modules/login';
+import {encryptedPasswd, decryptedPasswd} from '../../lib/cryptoUtils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
           margin: theme.spacing(1),
-          width: '25ch',
+          width: '35ch',
         },
+    },
+    modalDialog:{
+        fontFamily: 'Arial',
+        position: "fixed",
+        width: "450px",
+        height: "470px",
+        maxWidth: "calc(100% - 40px)",
+        maxHeight: "calc(100% - 30px)",
+        backgroundColor: "white",
+        border: "1px solid #547da1",
+        zIndex: "2",
+        boxShadow: "0 0px 6px #15030a",
+        borderRadius: "4px",
+        left: "50%",
+        transform: "translateX(-50%) translateY(-50%)",
+        top: "50%",
+        '& h2':{
+            marginLeft: '20px'
+        },
+        '& form':{
+            margin: 'auto 65px'
+        }
+    },
+    closeBtn:{
+        position: "relative",
+        left: "93%",
+        top: "2%"
     }
 }));
 
@@ -21,26 +54,62 @@ const Login = ({
     formStatus
 }) => {
     const classes = useStyles();
-    const loginModal = useRef();
     var dispatch = useDispatch();
+    const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
     const [loading, setLoading] = React.useState(false);
     const [showModal, setShowModal] = React.useState(false);
     const [error, setError] = React.useState(null);
 
     useEffect(()=>{
-        setShowModal(isOpen)
+        setShowModal(isOpen);
+        changeForm("login")
     },[isOpen]);
      
+    const initFormField = useCallback(()=>{
+        setUserId("");
+        setPassword("");
+        setPassword1("");
+        setPassword2("");
+    }, []);
+
     const login = () =>{
-        console.log('login')
+
     };
 
     const register = () =>{
-        console.log('register')
+        if(!userId){
+            alert('사용자ID을 입력해주세요.');
+            return;
+        }
+
+        if(!password){
+            alert('패스워드를 입력해주세요.');
+            return;
+        }
+
+        if(!password1){
+            alert('패스워드를 입력해주세요.');
+            return;
+        }
+
+        if(password != password1){
+            alert("패스워드가 동일하지 않습니다.");
+            return;
+        }
+        //아이디 중복체크
+        //패스워드 암호화
+        //dispatch(signUpAction({userId: userId,password: encryptedPasswd(password)}))
+        var test = encryptedPasswd(password)
+        console.log(test)
+        var dd = decryptedPasswd(test);
+        console.log(dd);
     };
 
     const changePasswd = () =>{
-        console.log('changePasswd')
+        //dispatch(chgPasswdAction())
     };
 
     const closeModal =() =>{
@@ -57,98 +126,64 @@ const Login = ({
     }
 
     const changeForm = useCallback((formStatus) =>{
+        initFormField();
         dispatch(loginFormChangeAction(formStatus))
     },[formStatus])
 
-    const LoignForm = () =>{
-        return(
-            <React.Fragment>
-                <h2>로그인</h2>
-                <div style={{clear:"both", border: "1px solid #afaeae", marginBottom:"10px"}}></div>
-                <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="standard-basic" name="userId" label="Username or email" />
-                    <TextField id="standard-basic" name="userPasswd" label="Password" />
-                    <div>
-                        <Link href="#" onClick={()=> changeForm("recoverPassword")}>Forgot Password</Link>
-                    </div>
-                    <Button className="loginBtn" 
-                        variant="contained" 
-                        color="primary"
-                        onClick={()=>{login()}}
-                    >로그인</Button>
-                    <div>
-                        <Link href="#" onClick={()=> changeForm("register")}>Create your account</Link>
-                    </div>
-                </form>
-            </React.Fragment>
-        )
-    }
-
-    const LoignRegisterForm = () =>{
-        return(
-            <React.Fragment>
-                <h2>회원가입</h2>
-                <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="standard-basic" name="userId" label="Username or email" />
-                    <TextField id="standard-basic" name="userPasswd" label="Password" />
-                    <TextField id="standard-basic" name="userPasswd1" label="Password" />
-                    <Button className="loginBtn" variant="contained" color="primary"  onClick={()=>{register()}}>회원 등록</Button>
-                    <div>
-                        <Link href="#" onClick={()=> changeForm("login")}>로그인</Link>
-                    </div>
-                </form>
-            </React.Fragment>
-        )
-    }
-
-    const LoignRecoverPasswordForm = () =>{
-        return(
-            <React.Fragment>
-                <h2>비밀번호 찾기</h2>
-                <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="standard-basic" name="userId" label="Username or email" />
-                    <TextField id="standard-basic" name="userPasswd" label="Password" />
-                    <TextField id="standard-basic" name="userPasswd1" label="new Password" />
-                    <TextField id="standard-basic" name="userPasswd2" label="new Password" />
-                    <Button className="loginBtn" variant="contained" color="primary" onClick={()=>{changePasswd()}}>패스워드 변경</Button>
-                    <div>
-                        <Link href="#" onClick={()=> changeForm("login")}>로그인</Link>
-                    </div>
-                </form>
-            </React.Fragment>
-        )
-    }
-
-
-    const LoginContainer = (formStatus) =>{
-        return (
-            <React.Fragment>
-                {formStatus === 'login' ? <LoignForm /> : null}
-                {formStatus === 'register' ? <LoignRegisterForm /> : null}
-                {formStatus === 'recoverPassword' ? <LoignRecoverPasswordForm /> : null}
-            </React.Fragment>   
-        )
-    };
-
     return (
         <React.Fragment>
-            <ReactModalLogin
-                tabs={null}
-                initialTab={'login'}
-                visible={showModal}
-                onCloseModal={() => closeModal()}
-                loading={loading}
-                error={error}
-                aboveSocialsLoginContainer={LoginContainer(formStatus)}
-                loginError={{
-                    label: "Couldn't sign in, please try again."
-                }}
-                registerError={{
-                    label: "Couldn't sign up, please try again."
-                }}
-                startLoading={() => startLoading}
-                finishLoading={() => finishLoading}
-            />
+            <div className={classes.modalDialog} style={{display: isOpen ? "block": "none"}}>
+                <CancelOutlined className={classes.closeBtn} onClick={closeModal} />
+                {formStatus === 'login' ?             
+                    (<div>
+                        <h2>로그인</h2>
+                        <div style={{clear:"both", border: "1px solid #afaeae", marginBottom:"10px"}}></div>
+                        <form name="loginForm" className={classes.root} noValidate autoComplete="off">
+                            <TextField id="standard-basic" name="userId" label="Username or email" value={userId} onChange={(evt) => setUserId((evt.target.value))} />
+                            <TextField id="standard-basic" name="password" label="Password" value={password} onChange={(evt)=> setPassword(evt.target.value)} />
+                            <div>
+                                <Link href="#" onClick={()=> changeForm("recoverPassword")}>Forgot Password</Link>
+                            </div>
+                            <Button className="loginBtn" 
+                                variant="contained" 
+                                color="primary"
+                                onClick={login}
+                            >로그인으로</Button>
+                            <div>
+                                <Link href="#" onClick={()=> changeForm("register")}>Create your account</Link>
+                            </div>
+                        </form>
+                    </div>): formStatus === 'register' ? 
+                    <div>
+                        <h2>회원가입</h2>
+                        <div style={{clear:"both", border: "1px solid #afaeae", marginBottom:"10px"}}></div>
+                        <form name="registerForm" className={classes.root} noValidate autoComplete="off">
+                            <TextField id="standard-basic" name="userId" label="Username or email"   value={userId} onChange={(evt)=> setUserId(evt.target.value)} />
+                            <TextField id="standard-basic" type="password" name="password" label="Password"   value={password} onChange={(evt)=> setPassword(evt.target.value)} />
+                            <TextField id="standard-basic" type="password" name="password1" label="Password"  value={password1} onChange={(evt)=> setPassword1(evt.target.value)}/>
+                            <Button className="loginBtn" variant="contained" color="primary"  onClick={()=>{register()}}>회원 등록</Button>
+                            <div>
+                                <Link href="#" onClick={()=> changeForm("login")}>로그인으로</Link>
+                            </div>
+                        </form>
+                    </div>
+                    : 
+                    <React.Fragment>
+                        <h2>비밀번호 찾기</h2>
+                        <div style={{clear:"both", border: "1px solid #afaeae", marginBottom:"10px"}}></div>
+                        <form name="changePasswordForm" className={classes.root} noValidate autoComplete="off">
+                            <TextField id="standard-basic" name="userId" label="Username or email" value={userId} onChange={(evt)=> setUserId(evt.target.value)} />
+                            <TextField id="standard-basic" name="password" label="Password" value={password} onChange={(evt)=> setPassword(evt.target.value)} />
+                            <TextField id="standard-basic" name="password1" label="new Password" value={password1} onChange={(evt)=> setPassword1(evt.target.value)} />
+                            <TextField id="standard-basic" name="password2" label="new Password" value={password2} onChange={(evt)=> setPassword2(evt.target.value)} />
+                            <Button className="loginBtn" variant="contained" color="primary" onClick={()=>{changePasswd()}}>패스워드 변경</Button>
+                            <div>
+                                <Link href="#" onClick={()=> changeForm("login")}>로그인으로</Link>
+                            </div>
+                        </form>
+                    </React.Fragment>
+                    }
+            </div>
         </React.Fragment>
     )
 };

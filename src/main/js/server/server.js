@@ -66,8 +66,78 @@ app.get('/menu', (req, res)=>{
         if(!err) res.send(data)
         else res.send(err)
     })
-})
+});
 
+app.get('/login' , (req, res)=>{
+    console.log(req);
+    db.query(
+        'SELECT * FROM USER_INFO'+
+        'WHERE userId='+ req.query.userId + 
+        'AND password='+ req.query.password
+    ,(err, data)=>{
+        if(!err) res.send({data, SUCCESS: true});
+        else res.send(err);
+    });
+});
+
+app.get('/createUser' , (req, res)=>{
+    console.log(req.body);
+    var param = req.body;
+    db.query(
+        'INSERT INTO USER_INFO'+
+        'VALUES('
+            + param.userId +','
+            + param.password
+        +')'
+    ,(err, data)=>{
+        if(!err) res.send(true);
+        else res.send(err);
+    });
+});
+
+app.get('/changePassword' , (req, res)=>{
+    var param = req.body;
+    db.query(
+        'UPDATE USER_INFO'+
+        'SET password='+param.password +
+        'WHERE userId='+param.userId
+    ,(err, data)=>{
+        if(!err) res.send(true);
+        else res.send(err);
+    });
+});
+
+
+/* 신규 */
+
+/* 		INSERT INTO COMMUNITY_INFO
+		(
+			title, 
+			content, 
+			contype, 
+			writer, 
+			regDate, 
+			modifyDate
+		)
+		VALUES
+		(
+			#{title},
+			#{content},
+			#{contype},
+			#{writer},
+			CURDATE(),
+			CURDATE()
+		) */
+
+
+// 수정
+
+/* 		UPDATE COMMUNITY_INFO
+		SET title=#{title},
+			content=#{content},
+			contype=#{conType},
+			modifyDate=CURDATE()
+		WHERE commuNum=#{commuNum} */
 app.listen(PORT, ()=>{
     console.log(`Server On: http://localhost:${PORT}/`);
 })

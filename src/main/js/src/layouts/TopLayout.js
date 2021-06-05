@@ -15,6 +15,9 @@ import {
 const useStyles = makeStyles((theme) => ({
     topArea: {
       flexGrow: 1,
+      '& .MuiAppBar-positionStatic':{
+        position: 'fixed'
+      }
     },
     menuButton: {
       marginRight: theme.spacing(1),
