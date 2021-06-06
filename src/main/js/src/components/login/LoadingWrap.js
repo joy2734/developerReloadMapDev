@@ -16,7 +16,7 @@ const LoadingWrap = ({
     loading
 }) => {
     const classes = useStyles();
-    
+    //console.log(loading);
     return(
         <div className={classes.loadingWrap}>
             <Loader

@@ -23,7 +23,7 @@ export const createPromiseSaga = (type, promiseCreator, message) =>{
             yield console.log(e)
             yield put({type: ERROR, error: true, payload: e})
         } finally {
-          yield put(finishLoadingAction({message: message}))
+            yield put(finishLoadingAction({message: message ? message: ''}))
         }
     }
 }

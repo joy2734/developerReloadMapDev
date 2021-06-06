@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const CommunityReadForm = ({
-    
+    userId 
 }) =>{
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -68,7 +68,9 @@ const CommunityReadForm = ({
                     onClick={()=> dispatch(changePageAction('home'))} 
                     variant="contained" 
                 color="primary">홈으로</Button>
-                <div>
+                {/* 로그인 상태 + 유저글작성자와 유저 같아야 보임 */}
+                {userId && comment.id === userId? 
+                    <div>
                     <Button className={classes.button} 
                         onClick={()=> dispatch(changePageAction('home'))} 
                         variant="contained" 
@@ -76,8 +78,8 @@ const CommunityReadForm = ({
                     <Button className={classes.button} 
                         onClick={()=> dispatch(changePageAction('home'))} 
                         variant="contained" 
-                    color="primary">삭제</Button>
-                </div>
+                    color="primary">삭제</Button></div>
+                : null}
             </div>
         </div>
     )

@@ -6,8 +6,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {titleChangeAction, loginOpenAction} from '../modules/interaction';
+import {logoutAction} from '../modules/login';
 import {
   useHistory
 } from "react-router-dom";
@@ -42,13 +43,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TopLayout = ({
-  isOpen
+  isOpen,
+  userId
 }) =>{
     const classes = useStyles();
     const [menus, setMenus] = useState([]);
     const history = useHistory();
     var dispatch = useDispatch();
-
     useEffect(()=>{
       fetch(getContextPath() + 'api/menu')
       .then(resp => { return resp.json() })
@@ -60,6 +61,15 @@ const TopLayout = ({
         history.replace("");
       history.push(menuLink)
       dispatch(titleChangeAction(menuLink))
+    }
+
+    const goLogout = () =>{
+      if(confirm("로그아웃 하시겠습니까?")){
+        console.log(userId);
+        dispatch(logoutAction({token:'', userId: userId}))
+      }else{
+
+      }
     }
 
     const menuList = menus.map( menu =>{
@@ -79,7 +89,10 @@ const TopLayout = ({
                     </ul>
                 </nav>
                 </div>
-                <Button color="inherit" onClick={()=> dispatch(loginOpenAction(!isOpen)) }>Login</Button>
+                {userId === '' ? 
+                  <Button color="inherit" onClick={()=> dispatch(loginOpenAction(!isOpen)) }>Login</Button>
+                  : <Button color="inherit" onClick={goLogout}>Logout</Button>
+                }
             </Toolbar>
             </AppBar>
         </div>

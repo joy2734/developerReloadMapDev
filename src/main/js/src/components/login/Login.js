@@ -13,7 +13,7 @@ import {
     ,chgPasswdAction
 } from '../../modules/login';
 import LoadingWrap from './LoadingWrap';
-import {encryptedPasswd, decryptedPasswd} from '../../lib/cryptoUtils';
+import {encryptedPasswd} from '../../lib/cryptoUtils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -62,7 +62,8 @@ const Login = ({
     const [password, setPassword] = useState('');
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
-    const [showModal, setShowModal] = React.useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [userErrorForm, setUserErrorForm] = useState('');
 
     useEffect(()=>{
         if(loading.message)
@@ -73,6 +74,7 @@ const Login = ({
     
     
     const initFormField = useCallback(()=>{
+        setUserErrorForm('')
         setUserId("");
         setPassword("");
         setPassword1("");
@@ -80,10 +82,20 @@ const Login = ({
     }, []);
 
     const login = () =>{
+        if(!userId){
+            alert('사용자ID을 입력해주세요.');
+            return;
+        }
 
+        if(!password){
+            alert('패스워드를 입력해주세요.');
+            return;
+        }
+        dispatch(loginAction({userId: userId, password: encryptedPasswd(password)}));
     };
 
     const register = () =>{
+        setUserErrorForm('')
         if(!userId){
             alert('사용자ID을 입력해주세요.');
             return;
@@ -105,7 +117,16 @@ const Login = ({
         }
         //아이디 중복체크
         //패스워드 암호화
-        dispatch(signUpAction({userId: userId, password: encryptedPasswd(password)}))
+        fetch('api/isExistUser?userId='+userId)
+        .then((resp) => resp.json())
+        .then((data)=>{
+            console.log(data);
+            if(data.SUCCESS)
+                dispatch(signUpAction({userId: userId, password: encryptedPasswd(password)}))
+            else
+                setUserErrorForm('중복유저가 존재합니다.')
+        })
+
 
     };
 
@@ -133,6 +154,7 @@ const Login = ({
                         <div style={{clear:"both", border: "1px solid #afaeae", marginBottom:"10px"}}></div>
                         <form name="loginForm" className={classes.root} noValidate autoComplete="off">
                             <TextField id="standard-basic" name="userId" label="Username or email" value={userId} onChange={(evt) => setUserId((evt.target.value))} />
+                            <span>{userErrorForm}</span>
                             <TextField id="standard-basic" name="password" label="Password" value={password} onChange={(evt)=> setPassword(evt.target.value)} />
                             <div>
                                 <Link href="#" onClick={()=> changeForm("recoverPassword")}>Forgot Password</Link>
@@ -152,6 +174,7 @@ const Login = ({
                         <div style={{clear:"both", border: "1px solid #afaeae", marginBottom:"10px"}}></div>
                         <form name="registerForm" className={classes.root} noValidate autoComplete="off">
                             <TextField id="standard-basic" name="userId" label="Username or email"   value={userId} onChange={(evt)=> setUserId(evt.target.value)} />
+                            <span>{userErrorForm}</span>
                             <TextField id="standard-basic" type="password" name="password" label="Password"   value={password} onChange={(evt)=> setPassword(evt.target.value)} />
                             <TextField id="standard-basic" type="password" name="password1" label="Password"  value={password1} onChange={(evt)=> setPassword1(evt.target.value)}/>
                             <Button className="loginBtn" variant="contained" color="primary"  onClick={()=>{register()}}>회원 등록</Button>
@@ -166,6 +189,7 @@ const Login = ({
                         <div style={{clear:"both", border: "1px solid #afaeae", marginBottom:"10px"}}></div>
                         <form name="changePasswordForm" className={classes.root} noValidate autoComplete="off">
                             <TextField id="standard-basic" name="userId" label="Username or email" value={userId} onChange={(evt)=> setUserId(evt.target.value)} />
+                            <span>{userErrorForm}</span>
                             <TextField id="standard-basic" name="password" label="Password" value={password} onChange={(evt)=> setPassword(evt.target.value)} />
                             <TextField id="standard-basic" name="password1" label="new Password" value={password1} onChange={(evt)=> setPassword1(evt.target.value)} />
                             <TextField id="standard-basic" name="password2" label="new Password" value={password2} onChange={(evt)=> setPassword2(evt.target.value)} />

@@ -48,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 const CommnunityRead = ({
-    mode
+    mode,
+    userId,
+    token
 }) =>{
     const dispatch = useDispatch();
     const posts = useSelector(state => state.posts)
@@ -89,7 +91,7 @@ const CommnunityRead = ({
         setPageNumber(pageNum-1)
     };
 
-
+    console.log(userId)
     return(
         <div className={classes.container}>
             <TableContainer component={Paper}>
@@ -116,7 +118,7 @@ const CommnunityRead = ({
                     variant="outlined" color="primary"
                     onChange={changePage}
                 />
-                <Button className={classes.button} onClick={()=> dispatch(changePageAction('create'))} variant="contained" color="primary">등록</Button>
+                {userId ? <Button className={classes.button} onClick={()=> dispatch(changePageAction('create'))} variant="contained" color="primary">등록</Button>: null}
             </div>
             <CommnunitySearch/>
         </div>

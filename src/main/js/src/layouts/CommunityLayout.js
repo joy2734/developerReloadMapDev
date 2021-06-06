@@ -24,6 +24,10 @@ const CommunityLayout = ({
     const {
         mode
     }= useSelector(store => store.posts);
+    const {
+        userId,
+        token
+    } = useSelector(store => store.login.login);
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -33,7 +37,9 @@ const CommunityLayout = ({
     return(
         <div className={classes.container}>
             {mode == 'home' ? 
-                <CommnunityRead /> : mode == 'create' || mode == 'update' ? <CommnunityForm mode={mode}/> : <CommunityReadForm /> }
+                <CommnunityRead userId={userId} /> : 
+                    mode == 'create' || mode == 'update' ? <CommnunityForm mode={mode} userId={userId}/> : 
+                    <CommunityReadForm userId={userId} /> }
         </div>
     )
 }

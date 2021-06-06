@@ -18,6 +18,7 @@ import {
   ReactLayout,
   AndroidLayout,
   CommunityLayout} from './layouts';
+import TokenChecker from "./components/login/TokenChecker";
 import {useSelector} from 'react-redux';
 import { hot } from 'react-hot-loader/root';
 import {titleChangeAction} from "./modules/interaction";
@@ -60,16 +61,19 @@ function App() {
     isOpen,
     formStatus
   } = useSelector(store => store.interactReducer.login);
+  const {
+    userId,
+    token
+  } = useSelector(store => store.login.login);
   var dispatch = useDispatch();
   
   useEffect(()=>{
-    //dispatch(postsAction(getPosts))
     dispatch(titleChangeAction(location.href.split("/#/")[1] || "home"))
   }, []);
 
   return (
     <Router>
-      <TopLayout title={title} subTitle={subTitle} isOpen={isOpen} />
+      <TopLayout title={title} subTitle={subTitle} isOpen={isOpen} userId={userId} />
       <div className={classes.modalOverlay} style={{display: isOpen ? "block": "none"}} ></div>
       <div className={classes.container}>
           <div className={classes.title}>
@@ -92,6 +96,7 @@ function App() {
         isOpen={isOpen}
         formStatus={formStatus}
       />
+      <TokenChecker/>
     </Router>
   );
 }
