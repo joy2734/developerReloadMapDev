@@ -11,9 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import {conTypeMap} from '../../variables/formatter';
 import { useSelector, useDispatch } from "react-redux";
-import {initCommuAction, changePageAction, loadCommuAction } from '../../store/actions/RoadMapAction';
 import CommnunitySearch from './CommnunitySearch';
-import {postsAction, getPosts} from '../../modules/post';
+import {postsAction, postAction, getPost, getPosts, changePageAction} from '../../modules/post';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -55,30 +54,18 @@ const CommnunityRead = ({
     const posts = useSelector(state => state.posts)
     const classes = useStyles();
     const [pageNumber, setPageNumber] = useState(0);
-    //const [comments, setComments] = useState([]);
-    //const posts = useSelector(state => state)
-    const commentPerPage = 10
-    const pageVisited = pageNumber * commentPerPage; //???
+    const commentPerPage = 10;
+    const pageVisited = pageNumber * commentPerPage;
     useEffect(() =>{
-        dispatch(postsAction(getPosts))
+        dispatch(postsAction(getPosts));
     },[]);
 
-    //console.log(comments.posts)
-    // useEffect(()=>{
-    //     fetch(getContextPath() + 'list')
-    //     .then(resp => { return resp.json() })
-    //     .then(resp => {
-    //         dispatch(initCommuAction(resp));
-    //     })
-    //   }, []);
-
-    // const loadComment = (commId) =>{
-    //     dispatch(changePageAction('read'))
-    //     dispatch(loadCommuAction(commId))
-    // };
+    const loadComment = (commId) =>{
+        dispatch(changePageAction('read'));
+        dispatch(postAction(getPost(commId)));
+    };
 
     const comments = posts.posts.data || [];
-    console.log(comments)
     
     const commentPage = comments.slice(pageVisited, pageVisited + commentPerPage)
     .map((comment)=>{

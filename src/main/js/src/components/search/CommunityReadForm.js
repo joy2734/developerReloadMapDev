@@ -4,10 +4,10 @@ import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from "react-redux";
 import TextField from '@material-ui/core/TextField';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import {changePageAction} from '../../store/actions/RoadMapAction';
 import {FormControl} from '@material-ui/core';
 import { InputLabel, Input, FormHelperText } from '@material-ui/core';
-import {postsAction} from '../../modules';
+import {postAction, getPost} from '../../modules';
+import {changePageAction} from '../../modules/post';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -51,10 +51,6 @@ const CommunityReadForm = ({
     const classes = useStyles();
     const dispatch = useDispatch();
     const [comment, setCommnet] = useState({});
-
-    useEffect(()=>{
-        dispatch(postAction());
-    }, []);
 
     console.log(comment);
     return(

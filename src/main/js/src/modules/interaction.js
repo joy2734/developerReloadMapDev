@@ -18,14 +18,15 @@ const titleMap = {
 
 const TITLE_CHANGE = 'main/TITLE_CHANGE';
 const LOGIN_OPEN = 'main/LOGIN_OPEN';
-const LOGIN_FORM_CHANGE = 'main/LOGIN_FORM_CHANGE'
+const LOGIN_FORM_CHANGE = 'main/LOGIN_FORM_CHANGE';
+const START_LOADING = 'main/START_LOADING';
+const FINISH_LOADING = 'main/FINISH_LOADING';
 
-
-export const titleChangeAction = createAction(TITLE_CHANGE)
-export const loginOpenAction = createAction(LOGIN_OPEN)
-export const loginFormChangeAction = createAction(LOGIN_FORM_CHANGE)
-
-
+export const startLoadingAction = createAction(START_LOADING);
+export const finishLoadingAction = createAction(FINISH_LOADING);
+export const titleChangeAction = createAction(TITLE_CHANGE);
+export const loginOpenAction = createAction(LOGIN_OPEN);
+export const loginFormChangeAction = createAction(LOGIN_FORM_CHANGE);
 
 const initialState = {
     titleInfo:{
@@ -35,23 +36,31 @@ const initialState = {
     login:{
         isOpen: false,
         formStatus: 'login'
+    },
+    loading: {
+        loading: false,
+        message: ''
     }
 }
 
 export const interactReducer = handleActions({
     [TITLE_CHANGE]: (state, action) => (produce(state, draft =>{
-        draft.titleInfo.title = titleMap[action.payload][0]
-        draft.titleInfo.subTitle = titleMap[action.payload][1]
+        draft.titleInfo.title = titleMap[action.payload][0];
+        draft.titleInfo.subTitle = titleMap[action.payload][1];
     })),
     [LOGIN_OPEN]: (state, action) =>(produce(state, draft => {
-        draft.login.isOpen = action.payload
+        draft.loading.message = '';
+        draft.login.isOpen = action.payload;
     })),
     [LOGIN_FORM_CHANGE]: (state, action) =>(produce(state, draft =>{
-        draft.login.formStatus = action.payload
-    }))
+        draft.loading.message = '';
+        draft.login.formStatus = action.payload;
+    })),
+    [START_LOADING]: (state, action) =>(produce(state, draft =>{
+        draft.loading.loading = true;
+    })),
+    [FINISH_LOADING]: (state, action) =>(produce(state, draft =>{
+        draft.loading.message = action.payload.message;
+        draft.loading.loading = false;
+    })),
 }, initialState)
-
-/* (produce(state, draft =>{
-            draft.titleInfo.title = titleMap[action.payload][0]
-            draft.titleInfo.subTitle = titleMap[action.payload][1]
-        })), */

@@ -1,4 +1,5 @@
 import * as  postAPI from '../lib/post';
+import produce from 'immer';
 import { createAction, handleActions } from 'redux-actions'
 import{
     handleAsyncActions,
@@ -23,14 +24,17 @@ const [
     GET_POST_ERROR
 ] = createAsyncAction('post/GET_POST');
 
+const CHG_COMM_PAGE = 'post/CHG_COMM_PAGE';
+const SRH_POST = 'post/SRH_POST';
+
 export const postsAction = createAction(GET_POSTS)
 export const postAction = createAction(GET_POST)
+export const changePageAction = createAction(CHG_COMM_PAGE);
+export const searchPostAction = createAction(SRH_POST)
 
 export const getPosts = ()=> ({type: GET_POSTS});
 export const getPost = id => ({type: GET_POST, payload: id, meta: id});
 
-//const getPostsSaga = createPromiseSaga(GET_POSTS, postAPI.getPosts);
-//const getPostSaga = createPromiseSagaById(GET_POST, postAPI.getPost);
 function* getPostsSaga() {
     try {
       const posts = yield call(postAPI.getPosts); // call 을 사용하면 특정 함수를 호출하고, 결과물이 반환 될 때까지 기다려줄 수 있습니다.
@@ -78,7 +82,8 @@ export function* postsSaga() {
 
 const initialState = {
   posts: reducerUtils.initial(),
-  post: reducerUtils.initial()
+  post: reducerUtils.initial(),
+  mode: 'home'
 };
 
 export default function posts(state = initialState, action) {
@@ -91,6 +96,14 @@ export default function posts(state = initialState, action) {
         case GET_POST_SUCCESS:
         case GET_POST_ERROR:
           return handleAsyncActionsById(GET_POST, 'post')(state, action);
+        case CHG_COMM_PAGE:
+          return (produce(state, draft =>{
+            draft.mode = action.payload;
+          }))
+        case SRH_POST:
+          return (produce(state, draft =>{
+            draft.posts = action.payload;
+          }))
         default:
           return state;
     }

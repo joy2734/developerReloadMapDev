@@ -24,8 +24,7 @@ module.exports = {
     publicPath: '/',
     //contentBase: __dirname + '/dist/'
     proxy:{
-      '/list': 'http://localhost:8080/',
-      '/menu': 'http://localhost:8080/',
+      '/api': 'http://localhost:8080/'
     }
   },
   module: {

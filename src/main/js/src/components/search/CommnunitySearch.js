@@ -6,10 +6,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
-import {searchCommuAction} from '../../store/actions/RoadMapAction';
 import { useDispatch } from "react-redux";
 import {searchDateMap, searchTypeMap} from '../../variables/formatter';
-
+import {searchPostAction} from '../../modules/post';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -54,7 +53,7 @@ const CommnunitySearch = ({
         let url = getContextPath() + 'list?' + encodeURIComponent(searchType) + '=' + encodeURIComponent(searchInput) + '&dType=' + encodeURIComponent(searchDate)
         fetch(url)
         .then(resp => { return resp.json() })
-        .then(resp => {dispatch(searchCommuAction(resp))
+        .then(resp => {dispatch(searchPostAction(resp))//dispatch(searchCommuAction(resp)
         }, []);
     }
 

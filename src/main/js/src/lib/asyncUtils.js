@@ -1,21 +1,29 @@
 import produce from 'immer';
 import { call, put } from "@redux-saga/core/effects";
+import {
+startLoadingAction, 
+finishLoadingAction
+} from '../modules/interaction';
 
 export const createAsyncAction = (type) =>{
     return [`${type}`, `${type}_SUCCESS`, `${type}_ERROR`];
 }
 
 //프로미스를 기다렷다가 결과를 패치
-export const createPromiseSaga = (type, promiseCreator) =>{
+export const createPromiseSaga = (type, promiseCreator, message) =>{
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`]
 
     return function* saga(action){
+        yield put(startLoadingAction())
         try{
             const payload = yield call(promiseCreator, action.payload)
 
             yield put({type: SUCCESS, payload})
         } catch (e) {
+            yield console.log(e)
             yield put({type: ERROR, error: true, payload: e})
+        } finally {
+          yield put(finishLoadingAction({message: message}))
         }
     }
 }
@@ -89,3 +97,40 @@ export const handleAsyncActions = (type, key, keepData = false) => {
     };
   };
   
+  export const handleAsyncActionsById = (type, key) => {
+    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+    return (state, action) => {
+      const id = action.meta;
+      switch (action.type) {
+        case type:
+          return {
+            ...state,
+            [key]: {
+              ...state[key],
+              [id]: reducerUtils.loading(
+                // state[key][id]가 만들어져있지 않을 수도 있으니까 유효성을 먼저 검사 후 data 조회
+                null
+              )
+            }
+          };
+        case SUCCESS:
+          return {
+            ...state,
+            [key]: {
+              ...state[key],
+              [id]: reducerUtils.success(action.payload)
+            }
+          };
+        case ERROR:
+          return {
+            ...state,
+            [key]: {
+              ...state[key],
+              [id]: reducerUtils.error(action.payload)
+            }
+          };
+        default:
+          return state;
+      }
+    };
+  };

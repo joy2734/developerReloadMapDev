@@ -4,11 +4,11 @@ import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from "react-redux";
 import TextField from '@material-ui/core/TextField';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import {changePageAction} from '../../store/actions/RoadMapAction';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import {conTypeMap} from '../../variables/formatter';
+import {changePageAction} from '../../modules/post';
 
 const useStyles = makeStyles((theme) => ({
     container: {

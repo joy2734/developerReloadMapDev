@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from "react-redux";
-import {changePageAction} from '../store/actions/RoadMapAction';
+import {changePageAction} from '../modules/post';
 import {
     CommnunityForm,
     CommnunityRead,
@@ -21,26 +21,19 @@ const CommunityLayout = ({
 
 }) =>{
     const classes = useStyles();
-    // const {
-    //     mode
-    // }= useSelector(store => store.commPageReducer);
+    const {
+        mode
+    }= useSelector(store => store.posts);
     const dispatch = useDispatch();
 
-    // const posts = useMemo(
-    //   () => dispatch(postsAction(getPosts))
-    // , [dispatch]);
-    // console.log(posts)
+    useEffect(()=>{
+        dispatch(changePageAction('home'));
+    }, []);
 
-    // useEffect(()=>{
-    //     dispatch(changePageAction('home'))
-    //   }, []);
-
-    //console.log(mode);
     return(
         <div className={classes.container}>
-            <CommnunityRead />
-            {/* {mode == 'home' ? 
-                <CommnunityRead /> : mode == 'create' || mode == 'update' ? <CommnunityForm mode={mode}/> : <CommunityReadForm /> } */}
+            {mode == 'home' ? 
+                <CommnunityRead /> : mode == 'create' || mode == 'update' ? <CommnunityForm mode={mode}/> : <CommunityReadForm /> }
         </div>
     )
 }

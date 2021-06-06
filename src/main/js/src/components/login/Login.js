@@ -6,11 +6,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import { Alert } from '@material-ui/lab';
 import {
     loginAction
     ,signUpAction
     ,chgPasswdAction
 } from '../../modules/login';
+import LoadingWrap from './LoadingWrap';
 import {encryptedPasswd, decryptedPasswd} from '../../lib/cryptoUtils';
 
 const useStyles = makeStyles((theme) => ({
@@ -55,19 +57,21 @@ const Login = ({
 }) => {
     const classes = useStyles();
     var dispatch = useDispatch();
+    const loading = useSelector(store => store.interactReducer.loading);
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
-    const [loading, setLoading] = React.useState(false);
     const [showModal, setShowModal] = React.useState(false);
-    const [error, setError] = React.useState(null);
 
     useEffect(()=>{
+        if(loading.message)
+            alert(loading.message);
         setShowModal(isOpen);
         changeForm("login")
-    },[isOpen]);
-     
+    },[isOpen, loading]);
+    
+    
     const initFormField = useCallback(()=>{
         setUserId("");
         setPassword("");
@@ -101,11 +105,8 @@ const Login = ({
         }
         //아이디 중복체크
         //패스워드 암호화
-        //dispatch(signUpAction({userId: userId,password: encryptedPasswd(password)}))
-        var test = encryptedPasswd(password)
-        console.log(test)
-        var dd = decryptedPasswd(test);
-        console.log(dd);
+        dispatch(signUpAction({userId: userId, password: encryptedPasswd(password)}))
+
     };
 
     const changePasswd = () =>{
@@ -114,15 +115,6 @@ const Login = ({
 
     const closeModal =() =>{
         dispatch(loginOpenAction(false))
-        setError(null);
-    }
-     
-    const startLoading= ()=> {
-        setLoading(true)
-    }
-     
-    const finishLoading = () => {
-        setLoading(false);
     }
 
     const changeForm = useCallback((formStatus) =>{
@@ -132,6 +124,7 @@ const Login = ({
 
     return (
         <React.Fragment>
+            <LoadingWrap className="loading" loading={loading.loading} />
             <div className={classes.modalDialog} style={{display: isOpen ? "block": "none"}}>
                 <CancelOutlined className={classes.closeBtn} onClick={closeModal} />
                 {formStatus === 'login' ?             
@@ -148,7 +141,7 @@ const Login = ({
                                 variant="contained" 
                                 color="primary"
                                 onClick={login}
-                            >로그인으로</Button>
+                            >로그인</Button>
                             <div>
                                 <Link href="#" onClick={()=> changeForm("register")}>Create your account</Link>
                             </div>
@@ -163,12 +156,12 @@ const Login = ({
                             <TextField id="standard-basic" type="password" name="password1" label="Password"  value={password1} onChange={(evt)=> setPassword1(evt.target.value)}/>
                             <Button className="loginBtn" variant="contained" color="primary"  onClick={()=>{register()}}>회원 등록</Button>
                             <div>
-                                <Link href="#" onClick={()=> changeForm("login")}>로그인으로</Link>
+                                <Link href="#" onClick={()=> changeForm("login")}>Login</Link>
                             </div>
                         </form>
                     </div>
                     : 
-                    <React.Fragment>
+                    <div>
                         <h2>비밀번호 찾기</h2>
                         <div style={{clear:"both", border: "1px solid #afaeae", marginBottom:"10px"}}></div>
                         <form name="changePasswordForm" className={classes.root} noValidate autoComplete="off">
@@ -178,10 +171,10 @@ const Login = ({
                             <TextField id="standard-basic" name="password2" label="new Password" value={password2} onChange={(evt)=> setPassword2(evt.target.value)} />
                             <Button className="loginBtn" variant="contained" color="primary" onClick={()=>{changePasswd()}}>패스워드 변경</Button>
                             <div>
-                                <Link href="#" onClick={()=> changeForm("login")}>로그인으로</Link>
+                                <Link href="#" onClick={()=> changeForm("login")}>Login</Link>
                             </div>
                         </form>
-                    </React.Fragment>
+                    </div>
                     }
             </div>
         </React.Fragment>

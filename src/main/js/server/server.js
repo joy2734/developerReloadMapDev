@@ -1,11 +1,14 @@
 const express = require('express');
 const _ = require('underscore');
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 8080;
 const db = require('./config/db');
 
+app.use(bodyParser.json());
+
 /* 게시판 Api */
-app.get('/list', (req, res)=>{
+app.get('/api/list', (req, res)=>{
     console.log(req.query)//param
     var dType = req.query.dType;
     var params = _.omit(req.query, 'dType');
@@ -61,14 +64,14 @@ app.get('/list', (req, res)=>{
 })
 
 /* 상단 menu load api */
-app.get('/menu', (req, res)=>{
+app.get('/api/menu', (req, res)=>{
     db.query('SELECT * FROM MENU_INFO', (err, data)=>{
         if(!err) res.send(data)
         else res.send(err)
     })
 });
 
-app.get('/login' , (req, res)=>{
+app.get('/api/login' , (req, res)=>{
     console.log(req);
     db.query(
         'SELECT * FROM USER_INFO'+
@@ -80,22 +83,17 @@ app.get('/login' , (req, res)=>{
     });
 });
 
-app.get('/createUser' , (req, res)=>{
+app.post('/api/createUser' , (req, res)=>{
     console.log(req.body);
     var param = req.body;
-    db.query(
-        'INSERT INTO USER_INFO'+
-        'VALUES('
-            + param.userId +','
-            + param.password
-        +')'
-    ,(err, data)=>{
+    var sql ='INSERT INTO USER_INFO (userId, password) '+'VALUES( "'+ param.userId +'", "'+ param.password+'" )';
+    db.query(sql ,(err, data)=>{
         if(!err) res.send(true);
         else res.send(err);
     });
 });
 
-app.get('/changePassword' , (req, res)=>{
+app.post('/api/changePassword' , (req, res)=>{
     var param = req.body;
     db.query(
         'UPDATE USER_INFO'+

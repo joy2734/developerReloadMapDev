@@ -9,6 +9,7 @@ import{
     reducerUtils 
 } from '../lib/asyncUtils';
 import { takeLatest, put, call } from "@redux-saga/core/effects";
+import produce from 'immer';
 
 const [
     LOGIN_REQUEST,
@@ -62,8 +63,8 @@ function createLoginRequestSaga(type, api){
 
 
 const loginRequestSaga = createLoginRequestSaga(LOGIN_REQUEST, loginAPI.login);
-const signUpRequestSaga = createPromiseSaga(SIGNUP_REQUEST, loginAPI.createUser);
-const logoutRequestSaga = createPromiseSaga(CHGPASSWD_REQUEST, loginAPI.changePassword);
+const signUpRequestSaga = createPromiseSaga(SIGNUP_REQUEST, loginAPI.createUser, "사용자 등록에 성공하였습니다.");
+const logoutRequestSaga = createPromiseSaga(CHGPASSWD_REQUEST, loginAPI.changePassword, "비밀번호 변경에 성공하였습니다.");
 
 export function* loginSaga() {
     yield takeLatest(LOGIN_REQUEST, loginRequestSaga)
@@ -81,11 +82,9 @@ const initialState = {
 
 export const login = handleActions({
     [LOGIN_REQUEST_SUCCESS]: (state, action) => (produce(state, draft => {
-        //draft.login = 
         console.log(action.payload);
     })),
     [SIGNUP_REQUEST_SUCCESS]: (state, action) =>(produce(state, draft => {
-        //draft.login = 
         console.log(action.payload);
     })),
     [CHGPASSWD_REQUEST_SUCCESS]: (state, action) =>(produce(state, draft =>{
