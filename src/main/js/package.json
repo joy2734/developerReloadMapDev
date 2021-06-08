@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve",
     "build": "webpack build",
-    "ele-start": "electron main.js",
+    "ele-start": "webpack build && electron main.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -38,6 +38,7 @@
     "body-parser": "^1.19.0",
     "crypto-js": "^4.0.0",
     "css-loader": "^5.0.1",
+    "ejs": "^3.1.6",
     "electron": "^13.0.1",
     "electron-builder": "21.2.0",
     "eslint": "6.1.0",

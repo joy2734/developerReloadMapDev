@@ -1,12 +1,20 @@
 const express = require('express');
 const _ = require('underscore');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 8080;
 const db = require('./config/db');
-const { query } = require('./config/db');
+const { response } = require('express');
 
+//configure
 app.use(bodyParser.json());
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
+app.get('/api/popup', (req, res) =>{
+    res.render('popup.html');
+});
 
 /* 게시판 Api */
 app.get('/api/list', (req, res)=>{

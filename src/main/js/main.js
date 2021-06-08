@@ -22,10 +22,6 @@ function createWindow() {
         }
     });
 
-    //Html 파일 불러오기
-    //빌드시사용
-    //window.loadFile('./public/index.html');
-
     //개발자도구여는 옵션.
     if(is.development){
         //node 서버 + webpack dev 다음 구동
@@ -33,18 +29,22 @@ function createWindow() {
         window.loadURL(config.LOCAL_WEB_URL);
     }else{
         setContentSecurityPolicy(`
-        default-src 'none';
-        script-src 'self';
-        img-src 'self' https://www.gravator.com;
-        style-src 'self' 'unsafe-inline';
-        font-src 'self';
-        connect-src 'self' ${config.PRODUCTION_WEB_URL};
-        base-uri 'none';
-        form-action 'none';
-        frame-ancestors 'none';
+            default-src 'none';
+            script-src 'self';
+            img-src 'self' https://www.gravator.com;
+            style-src 'self' 'unsafe-inline';
+            font-src 'self';
+            connect-src 'self' ${config.PRODUCTION_WEB_URL};
+            base-uri 'none';
+            form-action 'none';
+            frame-ancestors 'none';
         `);
-        window.loadURL(config.PRODUCTION_WEB_URL);
+        //Html 파일 불러오기
+        //빌드시사용
+        //window.loadURL(config.PRODUCTION_WEB_URL);
     }
+    //파일띄우기
+    window.loadFile('./public/index.html');
 
     showNotification();
 

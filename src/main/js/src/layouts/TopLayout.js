@@ -72,6 +72,10 @@ const TopLayout = ({
       }
     }
 
+    const goPopup = () =>{
+      window.open("/api/popup", "popupWin", "width=600, height=600");
+    }
+
     const menuList = menus.map( menu =>{
       return <li key={menu.menuId} className={classes.title} onClick={()=> clickMenu(menu.menuLink)}><Typography>{menu.menuName}</Typography></li>
     })
@@ -93,6 +97,7 @@ const TopLayout = ({
                   <Button color="inherit" onClick={()=> dispatch(loginOpenAction(!isOpen)) }>Login</Button>
                   : <Button color="inherit" onClick={goLogout}>Logout</Button>
                 }
+                <Button color="inherit" onClick={ goPopup }>팝업</Button>
             </Toolbar>
             </AppBar>
         </div>
